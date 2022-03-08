@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import { useWindowScroll, useWindowSize } from "react-use";
-import { scaleDom } from "./utils/StyleUtils";
+import { scaleDom, translateDom } from "./utils/StyleUtils";
 
 interface SceneInfo {
   height: number;
@@ -32,14 +32,20 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
 
   // page1
   ret.push({
-    height: windowHeight * 4,
+    height: windowHeight * 5,
     onScroll(percent: number, dom: Scene1Dom) {
       if (percent < 0.2) {
         // 사람 확대
         const humanScale = (75 + (percent / 0.2) * 25) / 100;
         scaleDom(dom.human!!, humanScale);
-      } else if (0.2 < percent) {
+        translateDom(dom.line1!!, -percent * 100, -percent * 100);
+        translateDom(dom.line2!!, -percent * 200, -percent * 200);
+        translateDom(dom.line3!!, -percent * 300, -percent * 300);
+      } else if (0.2 < percent && percent < 0.5) {
         scaleDom(dom.human!!, 1);
+        translateDom(dom.line1!!, -percent * 100, -percent * 100);
+        translateDom(dom.line2!!, -percent * 200, -percent * 200);
+        translateDom(dom.line3!!, -percent * 300, -percent * 300);
       }
     },
   });
@@ -87,6 +93,9 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
  */
 function App() {
   const scene1Human = useRef<HTMLImageElement>(null);
+  const scene1line1 = useRef<HTMLImageElement>(null);
+  const scene1line2 = useRef<HTMLImageElement>(null);
+  const scene1line3 = useRef<HTMLImageElement>(null);
 
   const { height: windowHeight } = useWindowSize();
   const { y: scrollY } = useWindowScroll();
@@ -136,6 +145,9 @@ function App() {
         case 0:
           sceneInfos[currentPage].onScroll(currentPagePercent, {
             human: scene1Human.current,
+            line1: scene1line1.current,
+            line2: scene1line2.current,
+            line3: scene1line3.current,
           } as Scene1Dom);
           break;
         default:
@@ -149,20 +161,43 @@ function App() {
       <Header />
       <div className="w-screen" style={{ height: pageHeight }}>
         <section className="w-screen" style={{ height: sceneInfos[0]?.height }}>
-          <div className="sticky block top-0 h-screen w-full background">
-            <img
-              className="absolute -left-1/3 md:-left-1/3 lg:-left-10 bottom-0 origin-bottom-left md:max-w-4xl"
-              ref={scene1Human}
-              src={require("./images/1page/human 1.png")}
-              alt="human"
-            />
-            <div className="absolute w-screen md:w-1/2 md:mt-24 right-0 top-1/3 text-center">
-              <div className="font-bold text-4xl lg:text-7xl md:text-6xl text-white tracking-wide">
-                VR 시대는 온다
+          <div className="sticky block top-0 h-screen w-full">
+            <div className="relative w-full h-full bg-white">
+              <div className="box-border w-1/2 h-1/2 overflow-hidden">
+                <div className="background absolute top-0 w-full h-full" />
+                <img
+                  className="absolute w-2/3 top-0 left-0"
+                  ref={scene1line2}
+                  src={require("./images/1page/line 2.png")}
+                  alt=""
+                />
+                <img
+                  className="absolute top-0 right-0"
+                  ref={scene1line3}
+                  src={require("./images/1page/line 3.png")}
+                  alt=""
+                />
+                <img
+                  className="absolute -left-1/3 md:-left-1/3 lg:-left-10 bottom-0 origin-bottom-left md:max-w-4xl"
+                  ref={scene1Human}
+                  src={require("./images/1page/human 1.png")}
+                  alt="human"
+                />
+                <img
+                  className="absolute w-2/3 left-0 bottom-0"
+                  ref={scene1line1}
+                  src={require("./images/1page/line 1.png")}
+                  alt="line1"
+                />
+                <div className="absolute w-screen md:w-1/2 md:mt-24 right-0 top-1/3 text-center">
+                  <div className="font-bold text-4xl lg:text-7xl md:text-6xl text-white tracking-wide">
+                    VR 시대는 온다
+                  </div>
+                  <button className="rounded-full bg-[#81A9EF] text-white px-10 py-2 mt-7 mr-8 drop-shadow-lg">
+                    앱 다운로드
+                  </button>
+                </div>
               </div>
-              <button className="rounded-full bg-[#81A9EF] text-white px-10 py-2 mt-7 mr-8 drop-shadow-lg">
-                앱 다운로드
-              </button>
             </div>
           </div>
         </section>
