@@ -30,7 +30,7 @@ code {
 }
 
 .header-menu {
-  @apply mr-2;
+  @apply font-bold mr-2;
 }
 
 @layer utilities {
