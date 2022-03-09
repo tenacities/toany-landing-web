@@ -22,5 +22,6 @@ module.exports = {
   ],
   'rules': {
     'max-len': 'off',
+    'spaced-comment': 'off',
   },
 };

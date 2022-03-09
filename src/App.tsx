@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import { useWindowScroll, useWindowSize } from "react-use";
 import { scaleDom, translateDom } from "./utils/StyleUtils";
 
+
 interface SceneInfo {
   height: number;
 
@@ -46,6 +47,15 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
         scaleDom(dom.human!!, humanScale);
       } else if (0.2 < percent && percent < 0.5) {
         scaleDom(dom.human!!, 1);
+      } else if (.8 < percent) {
+        if (!window.isAutoScrolling && window.scrollDirection == "down") {
+          window.scrollTo({left: 0, top: this.height, behavior: 'smooth'});
+          window.isAutoScrolling = true;
+        }
+      }
+
+      if (window.scrollDirection == 'up') {
+        window.isAutoScrolling = false;
       }
 
       // 사람 얼굴로 포커싱 되면서 description 보이게
@@ -70,7 +80,7 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
   });
   // page2
   ret.push({
-    height: windowHeight,
+    height: windowHeight * 2,
     onScroll(percent: number) {
       console.log(`page2: ${percent}`);
     },
@@ -123,8 +133,10 @@ function App() {
   const scene1Description = useRef<HTMLDivElement>(null);
 
   const { height: windowHeight } = useWindowSize();
+  const prevScrollY = useRef(0);
   const { y: scrollY } = useWindowScroll();
-
+  window.scrollDirection = prevScrollY.current <= scrollY ? "down" : "up";
+  prevScrollY.current = scrollY;
   const [sceneInfos, setSceneInfos] = useState<Array<SceneInfo>>([]);
   const [pageHeight, setPageHeight] = useState(0);
 
@@ -188,7 +200,7 @@ function App() {
       }
     }
 
-    if (1 <= currentPage || 0.5 < currentPagePercent) {
+    if (0 == currentPage && 0.5 < currentPagePercent) {
       headerFontColor = "black";
     } else {
       headerFontColor = "white";
@@ -200,7 +212,7 @@ function App() {
       <Header fontColor={headerFontColor} />
       <div className="w-screen" style={{ height: pageHeight }}>
         <section className="w-screen" style={{ height: sceneInfos[0]?.height }}>
-          <div className="sticky block top-0 h-screen w-full bg-white">
+          <div className="sticky block top-0 h-screen w-screen bg-white">
             <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full overflow-x-clip">
               <div className="absolute background top-0 w-full h-full" />
               <img
@@ -256,9 +268,9 @@ function App() {
               />
               <div
                 ref={scene1Description}
-                className="absolute flex flex-col md:flex-row justify-between top-[55vh] lg:px-[10vh] md:px-10 w-full opacity-0 transition-opacity duration-500"
+                className="absolute flex flex-col md:flex-row justify-between top-[55vh] lg:px-[10vh] md:px-10 w-full h-[45vh] opacity-0 transition-opacity duration-500"
               >
-                <div className="font-bold lg:text-6xl md:text-4xl text-3xl md:mt-6 mt-3 leading-snug text-center md:text-left min-w-fit">
+                <div className="font-bold lg:text-6xl md:text-4xl text-3xl md:mt-6 mt-3 !leading-snug text-center md:text-left min-w-fit">
                   VR은 일상에 <br /> 녹아들어야 한다
                 </div>
                 <div className="lg:text-3xl md:text-2xl text-xl md:mt-6 md:mr-0 mr-2 max-w-screen-sm text-right">
@@ -267,6 +279,17 @@ function App() {
                   repellat suscipit. Consequuntur corporis cum dignissimos et
                   eum facere odit provident sint vitae!
                 </div>
+                <div className='absolute font-bold bottom-[15vh] left-1/2 -translate-x-1/2'>scroll</div>
+                <div className='absolute border-r-2 h-[13vh] bottom-0 left-1/2 -translate-x-1/2' />
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="w-screen" style={{ height: sceneInfos[1]?.height }}>
+          <div className="sticky top-0 h-screen w-screen bg-red-500">
+            <div className="relative">
+              <div className="absolute top-0 w-screen h-screen background">
+
               </div>
             </div>
           </div>
