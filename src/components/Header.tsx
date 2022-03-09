@@ -1,8 +1,12 @@
 import React from "react";
 
-const Header = () => {
+export interface HeaderProps {
+  fontColor: 'white' | 'black'
+}
+
+const Header = (props: HeaderProps) => {
   return (
-    <div className="header-wrap">
+    <div className={`header-wrap text-${props.fontColor} font-adobe`}>
       <div className="header-logo">ToAny</div>
       <div className="header-right">
         <div className="header-menu">MENU</div>
