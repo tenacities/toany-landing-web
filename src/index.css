@@ -112,3 +112,23 @@ section {
     height: 45vh;
 }
 
+.youtube-video-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    @apply max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg
+}
+
+.youtube-video-container::after {
+    padding-top: 56.25%;
+    display: block;
+    content: '';
+}
+
+iframe.youtube-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

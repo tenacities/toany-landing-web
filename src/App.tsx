@@ -432,7 +432,7 @@ function App() {
                 <img
                   className="absolute sm:w-1/2 left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000 lg:-translate-x-full"
                   ref={scene2Human2}
-                  src={require("./images/4page/human 3.png")}
+                  src={require("./images/3page/human 3.png")}
                   alt="human2"
                 />
                 <div
@@ -476,25 +476,36 @@ function App() {
           </div>
         </section>
         <section className="w-screen" style={{ height: sceneInfos[2]?.height }}>
-          <div className="sticky top-0 h-screen w-screen bg-red-500">
-            <div className="relative w-screen h-screen">
-              <div className="absolute top-0 w-screen h-screen bg-gray-600">
-                <div className="absolute w-screen h-screen bg-black transition-opacity duration-500 opacity-60" />
-                <div className="absolute flex flex-col font-bold text-white w-screen h-screen justify-start items-center pt-[15vh] z-10">
-                  <div className="text-6xl mb-12">소개영상</div>
-                  <div className="relative w-full h-auto pt-[50%]">
-                    <div className="absolute top-0 left-0 w-full h-full">
-                      <iframe
-                        style={{margin: "auto"}}
-                        width="90%"
-                        height="100%"
-                        src="https://www.youtube.com/embed/QvGJWQrEOZs"
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </div>
+          <div className="relative w-screen h-screen">
+            <div className="absolute w-screen h-[200vh] top-0">
+              <div className="relative flex flex-col font-bold text-white w-screen h-screen justify-start items-center pt-[15vh]">
+                <div className="text-6xl mb-12 text-center">소개영상</div>
+                <div className="youtube-video-container">
+                  <iframe
+                    className="youtube-video"
+                    src="https://www.youtube.com/embed/QvGJWQrEOZs"
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col justify-center items-center w-screen h-screen">
+                <div className="flex flex-col items-center justify-center min-w-[30vw] p-3 bg-black">
+                  <input className="w-full p-3" type="text" placeholder="아이디를 입력하세요."/>
+                  <input className="w-full p-3 mt-4" type="password" placeholder="비밀번호를 입력하세요."/>
+                  <div className="mt-3 ml-auto">
+                    <button className="mr-4 text-white">회원가입</button>
+                    <button className="text-white">비밀번호 찾기</button>
+                  </div>
+                  <button className="w-full text-white text-center mt-3 p-3 bg-[#1E2F59]">로그인</button>
+                  <hr className="w-full my-6 border-gray-500"/>
+                  <div className="text-white">SNS 계정으로 간편하게 로그인 가능합니다.</div>
+                  <div className="flex justify-evenly w-full my-6">
+                    <button className="max-w-[18%] rounded-full overflow-hidden"><img src={require("./images/3page/sns_kakao.png")} alt="kakao login"/></button>
+                    <button className="max-w-[18%] rounded-full overflow-hidden"><img src={require("./images/3page/sns_google.png")} alt="google login"/></button>
+                    <button className="max-w-[18%] rounded-full overflow-hidden"><img src={require("./images/3page/sns_apple.png")} alt="apple login"/></button>
                   </div>
                 </div>
               </div>
