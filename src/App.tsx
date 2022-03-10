@@ -435,8 +435,8 @@ function App() {
                   <div className="w-screen lg:w-auto font-bold text-5xl md:text-6xl text-white text-center lg:text-right">
                     사전신청 이벤트
                   </div>
-                  <div className="flex flex-row justify-center lg:justify-between items-stretch mt-8">
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="flex flex-col md:flex-row justify-center lg:justify-between items-center mt-8">
+                    <form className='h-12' onSubmit={handleSubmit(onSubmit)}>
                       <input
                         className="drop-shadow-xl h-full px-6 box-border w-44 md:mr:12"
                         type="tel"
@@ -448,7 +448,7 @@ function App() {
                         SIGN UP
                       </button>
                     </form>
-                    <button className="font-bold ml-1.5 bg-white p-3 px-6 text-[#035FF8] drop-shadow-xl">
+                    <button className="font-bold w-fit md:w-auto mt-6 md:mt-0 ml-1.5 bg-white p-3 px-6 text-[#035FF8] drop-shadow-xl">
                       LEARN MORE
                     </button>
                   </div>
