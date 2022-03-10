@@ -5,7 +5,7 @@ import { scaleDom, translateDom } from "./utils/StyleUtils";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { isMobile } from "react-device-detect";
-import {formatPhoneNumber} from './utils/StringUtils';
+import { formatPhoneNumber } from "./utils/StringUtils";
 
 interface SceneInfo {
   height: number;
@@ -36,7 +36,7 @@ interface Scene2Dom {
   dim: HTMLDivElement | null;
   description: HTMLDivElement | null;
   human2: HTMLImageElement | null;
-  event:  HTMLDivElement | null;
+  event: HTMLDivElement | null;
 }
 
 /**
@@ -110,13 +110,13 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
 
       if (0.5 <= percent) {
         dom.human2?.classList?.remove("opacity-0");
-        dom.event?.classList?.remove('opacity-0');
+        dom.event?.classList?.remove("opacity-0");
       } else {
         dom.human2?.classList?.add("opacity-0");
         dom.event?.classList?.add("opacity-0");
       }
 
-      if (percent <= .1) {
+      if (percent <= 0.1) {
         dom.dim?.classList?.add("!opacity-0");
         dom.description?.classList?.add("opacity-0");
         dom.description?.classList?.remove("-translate-y-1/2");
@@ -126,12 +126,12 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
         dom.description?.classList?.remove("translate-y-1/4");
         dom.description?.classList?.remove("-translate-y-full");
         dom.description?.classList?.add("-translate-y-1/2");
-      } else if (.5 < percent) {
+      } else if (0.5 < percent) {
         dom.dim?.classList?.add("!opacity-0");
         dom.description?.classList?.add("opacity-0");
         dom.description?.classList?.remove("-translate-y-1/2");
 
-        if (window.scrollDirection == 'down') {
+        if (window.scrollDirection == "down") {
           dom.description?.classList?.add("-translate-y-full");
         } else {
           dom.description?.classList?.add("translate-y-1/4");
@@ -144,7 +144,11 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
           !window.isAutoScrolling &&
           window.scrollDirection == "down"
         ) {
-          window.scrollTo({ left: 0, top: (dom.scene1?.clientHeight || 0) + this.height, behavior: "smooth" });
+          window.scrollTo({
+            left: 0,
+            top: (dom.scene1?.clientHeight || 0) + this.height,
+            behavior: "smooth",
+          });
           window.isAutoScrolling = true;
         }
       } else {
@@ -303,17 +307,16 @@ function App() {
     phone: string;
   };
 
-  const { register, handleSubmit, watch, setValue } =
-    useForm<FormValues>();
+  const { register, handleSubmit, watch, setValue } = useForm<FormValues>();
 
-  let phoneNumber = watch('phone', '');
-  phoneNumber = phoneNumber.replaceAll('-', '');
-  phoneNumber = phoneNumber.replace(/(^\d{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
+  let phoneNumber = watch("phone", "");
+  phoneNumber = phoneNumber.replaceAll("-", "");
+  phoneNumber = phoneNumber.replace(/(^\d{3})([0-9]+)([0-9]{4})/, "$1-$2-$3");
   phoneNumber = formatPhoneNumber(phoneNumber);
 
   useEffect(() => {
-    setValue('phone', phoneNumber);
-  }, [phoneNumber])
+    setValue("phone", phoneNumber);
+  }, [phoneNumber]);
 
   const onSubmit = (data: FormValues) => {
     data.phone = data.phone.replaceAll("-", "");
@@ -345,7 +348,11 @@ function App() {
     <>
       <Header fontColor={headerFontColor} />
       <div className="w-screen" style={{ height: pageHeight }}>
-        <section ref={scene1Section} className="w-screen" style={{ height: sceneInfos[0]?.height }}>
+        <section
+          ref={scene1Section}
+          className="w-screen"
+          style={{ height: sceneInfos[0]?.height }}
+        >
           <div className="sticky block top-0 h-screen w-screen bg-white">
             <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full overflow-hidden">
               <div className="absolute background top-0 w-full h-full" />
@@ -464,11 +471,11 @@ function App() {
                     사전신청 이벤트
                   </div>
                   <div className="flex flex-col md:flex-row justify-center lg:justify-between items-center mt-8">
-                    <form className='h-12' onSubmit={handleSubmit(onSubmit)}>
+                    <form className="h-12" onSubmit={handleSubmit(onSubmit)}>
                       <input
                         className="drop-shadow-xl h-full px-6 box-border w-44 md:mr:12 rounded-tr-none rounded-br-none rounded-tl-md rounded-bl-md"
                         type="tel"
-                        placeholder='010-0000-0000'
+                        placeholder="010-0000-0000"
                         maxLength={13}
                         {...register("phone")}
                       />
