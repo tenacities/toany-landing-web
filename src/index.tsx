@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import axios from "axios";
 
 ReactDOM.render(
   <App />,
@@ -20,3 +21,8 @@ reportWebVitals();
 if ("scrollRestoration" in window.history) {
   window.history.scrollRestoration = "manual";
 }
+
+axios.defaults.baseURL = "https://api.example.com";
+axios.defaults.headers.post = {
+  "Content-Type": "application/json",
+};

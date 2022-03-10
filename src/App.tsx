@@ -2,7 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import { useWindowScroll, useWindowSize } from "react-use";
 import { scaleDom, translateDom } from "./utils/StyleUtils";
-
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { isMobile } from "react-device-detect";
+import {formatPhoneNumber} from './utils/StringUtils';
 
 interface SceneInfo {
   height: number;
@@ -23,10 +26,16 @@ interface Scene1Dom {
   window3: HTMLDivElement | null;
   window4: HTMLDivElement | null;
   description: HTMLDivElement | null;
+  scene2human1: HTMLImageElement | null;
+  scene2human2: HTMLImageElement | null;
 }
 
 interface Scene2Dom {
-  human?: HTMLImageElement | null;
+  human1: HTMLImageElement | null;
+  dim: HTMLDivElement | null;
+  description: HTMLDivElement | null;
+  human2: HTMLImageElement | null;
+  event:  HTMLDivElement | null;
 }
 
 /**
@@ -47,14 +56,18 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
         scaleDom(dom.human!!, humanScale);
       } else if (0.2 < percent && percent < 0.5) {
         scaleDom(dom.human!!, 1);
-      } else if (.8 < percent) {
-        if (!window.isAutoScrolling && window.scrollDirection == "down") {
-          window.scrollTo({left: 0, top: this.height, behavior: 'smooth'});
+      } else if (0.8 < percent) {
+        if (
+          !isMobile &&
+          !window.isAutoScrolling &&
+          window.scrollDirection == "down"
+        ) {
+          window.scrollTo({ left: 0, top: this.height, behavior: "smooth" });
           window.isAutoScrolling = true;
         }
       }
 
-      if (window.scrollDirection == 'up') {
+      if (window.scrollDirection == "up") {
         window.isAutoScrolling = false;
       }
 
@@ -76,13 +89,53 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
       translateDom(dom.line1!!, -percent * 50, -percent * 50);
       translateDom(dom.line2!!, -percent * 100, -percent * 100);
       translateDom(dom.line3!!, -percent * 150, -percent * 150);
+      dom.scene2human1?.classList?.add("opacity-0");
+      dom.scene2human2?.classList?.add("opacity-0");
     },
   });
   // page2
   ret.push({
-    height: windowHeight * 2,
-    onScroll(percent: number) {
-      console.log(`page2: ${percent}`);
+    height: windowHeight * 4,
+    onScroll(percent: number, dom: Scene2Dom) {
+      if (0 <= percent && percent < 0.1) {
+        dom.human1?.classList?.remove("opacity-0");
+        dom.human1?.classList?.remove("lg:-translate-x-full");
+      } else if (0.1 <= percent && percent < 0.5) {
+        dom.human1?.classList?.remove("opacity-0");
+        dom.human1?.classList?.add("lg:-translate-x-full");
+      } else if (0.5 <= percent) {
+        dom.human1?.classList?.add("opacity-0");
+      }
+
+      if (0.5 <= percent) {
+        dom.human2?.classList?.remove("opacity-0");
+        dom.event?.classList?.remove('opacity-0');
+      } else {
+        dom.human2?.classList?.add("opacity-0");
+        dom.event?.classList?.add("opacity-0");
+      }
+
+      if (percent <= .1) {
+        dom.dim?.classList?.add("!opacity-0");
+        dom.description?.classList?.add("opacity-0");
+        dom.description?.classList?.remove("-translate-y-1/2");
+      } else if (0.1 <= percent && percent < 0.5) {
+        dom.dim?.classList?.remove("!opacity-0");
+        dom.description?.classList?.remove("opacity-0");
+        dom.description?.classList?.remove("translate-y-1/4");
+        dom.description?.classList?.remove("-translate-y-full");
+        dom.description?.classList?.add("-translate-y-1/2");
+      } else if (.5 < percent) {
+        dom.dim?.classList?.add("!opacity-0");
+        dom.description?.classList?.add("opacity-0");
+        dom.description?.classList?.remove("-translate-y-1/2");
+
+        if (window.scrollDirection == 'down') {
+          dom.description?.classList?.add("-translate-y-full");
+        } else {
+          dom.description?.classList?.add("translate-y-1/4");
+        }
+      }
     },
   });
   // page3
@@ -132,6 +185,12 @@ function App() {
   const scene1AppDown = useRef<HTMLDivElement>(null);
   const scene1Description = useRef<HTMLDivElement>(null);
 
+  const scene2Human1 = useRef<HTMLImageElement>(null);
+  const scene2Dim = useRef<HTMLDivElement>(null);
+  const scene2Description = useRef<HTMLDivElement>(null);
+  const scene2Human2 = useRef<HTMLImageElement>(null);
+  const scene2Event = useRef<HTMLDivElement>(null);
+
   const { height: windowHeight } = useWindowSize();
   const prevScrollY = useRef(0);
   const { y: scrollY } = useWindowScroll();
@@ -179,10 +238,12 @@ function App() {
       currentPagePercent = 0;
     }
 
-    if (sceneInfos[currentPage]) {
+    console.log(currentPage, currentPagePercent);
+
+    if (currentPageInfo) {
       switch (currentPage) {
         case 0:
-          sceneInfos[currentPage].onScroll(currentPagePercent, {
+          currentPageInfo.onScroll(currentPagePercent, {
             human: scene1Human.current,
             line1: scene1Line1.current,
             line2: scene1Line2.current,
@@ -193,7 +254,18 @@ function App() {
             window3: scene1Window3.current,
             window4: scene1Window4.current,
             description: scene1Description.current,
+            scene2human1: scene2Human1.current,
+            scene2human2: scene2Human2.current,
           } as Scene1Dom);
+          break;
+        case 1:
+          currentPageInfo.onScroll(currentPagePercent, {
+            human1: scene2Human1.current,
+            dim: scene2Dim.current,
+            description: scene2Description.current,
+            human2: scene2Human2.current,
+            event: scene2Event.current,
+          } as Scene2Dom);
           break;
         default:
           break;
@@ -206,6 +278,48 @@ function App() {
       headerFontColor = "white";
     }
   }
+
+  type FormValues = {
+    phone: string;
+  };
+
+  const { register, handleSubmit, watch, setValue } =
+    useForm<FormValues>();
+
+  let phoneNumber = watch('phone', '');
+  phoneNumber = phoneNumber.replaceAll('-', '');
+  phoneNumber = phoneNumber.replace(/(^\d{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
+  phoneNumber = formatPhoneNumber(phoneNumber);
+
+  useEffect(() => {
+    setValue('phone', phoneNumber);
+  }, [phoneNumber])
+
+  const onSubmit = (data: FormValues) => {
+    data.phone = data.phone.replaceAll("-", "");
+    if (data.phone.length != 11) {
+      alert("check length");
+      return;
+    }
+
+    if (!data.phone.startsWith("010")) {
+      alert("check 010");
+      return;
+    }
+    axios
+      .post("https://api.landing.toany.app/pu/reg", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if (res.data.code) alert("duplicated!!");
+        else alert("done!!");
+      })
+      .catch(() => {
+        alert("unknown error!!");
+      });
+  };
 
   return (
     <>
@@ -268,7 +382,7 @@ function App() {
               />
               <div
                 ref={scene1Description}
-                className="absolute flex flex-col md:flex-row justify-between top-[55vh] lg:px-[10vh] md:px-10 w-full h-[45vh] opacity-0 transition-opacity duration-500"
+                className="absolute flex flex-col md:flex-row md:justify-between top-[55vh] lg:px-[10vh] md:px-10 w-full h-[45vh] opacity-0 transition-opacity duration-500"
               >
                 <div className="font-bold lg:text-6xl md:text-4xl text-3xl md:mt-6 mt-3 !leading-snug text-center md:text-left min-w-fit">
                   VR은 일상에 <br /> 녹아들어야 한다
@@ -279,17 +393,66 @@ function App() {
                   repellat suscipit. Consequuntur corporis cum dignissimos et
                   eum facere odit provident sint vitae!
                 </div>
-                <div className='absolute font-bold bottom-[15vh] left-1/2 -translate-x-1/2'>scroll</div>
-                <div className='absolute border-r-2 h-[13vh] bottom-0 left-1/2 -translate-x-1/2' />
+                <div className="absolute font-bold bottom-[15vh] left-1/2 -translate-x-1/2">
+                  scroll
+                </div>
+                <div className="absolute border-r-2 h-[13vh] bottom-0 left-1/2 -translate-x-1/2" />
               </div>
             </div>
           </div>
         </section>
         <section className="w-screen" style={{ height: sceneInfos[1]?.height }}>
           <div className="sticky top-0 h-screen w-screen bg-red-500">
-            <div className="relative">
+            <div className="relative w-screen h-screen">
               <div className="absolute top-0 w-screen h-screen background">
-
+                <img
+                  className="absolute max-w-[100vw] left-1/2 h-[70vh] top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000"
+                  ref={scene2Human1}
+                  src={require("./images/2page/human 2.png")}
+                  alt="human"
+                />
+                <img
+                  className="absolute max-w-[100vw] left-1/2 h-[70vh] top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000 lg:-translate-x-full"
+                  ref={scene2Human2}
+                  src={require("./images/4page/human 3.png")}
+                  alt="human2"
+                />
+                <div
+                  ref={scene2Dim}
+                  className="absolute w-screen h-screen bg-black transition-opacity duration-500 opacity-60 !opacity-0"
+                />
+                <div
+                  ref={scene2Description}
+                  className="absolute w-fit font-bold text-5xl md:text-6xl lg:text-7xl !leading-snug text-white top-1/2 left-1/2 lg:left-3/4 -translate-x-1/2 translate-y-1/4 transition-all duration-500 opacity-0"
+                >
+                  <div>메타버스도</div>
+                  <div>그래야 한다</div>
+                </div>
+                <div
+                  ref={scene2Event}
+                  className="absolute top-1/2 right-0 lg:pr-16 -translate-y-1/2 duration-500 opacity-0"
+                >
+                  <div className="w-screen lg:w-auto font-bold text-5xl md:text-6xl text-white text-center lg:text-right">
+                    사전신청 이벤트
+                  </div>
+                  <div className="flex flex-row justify-center lg:justify-between items-stretch mt-8">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      <input
+                        className="drop-shadow-xl h-full px-6 box-border w-44 md:mr:12"
+                        type="tel"
+                        placeholder='010-0000-0000'
+                        maxLength={13}
+                        {...register("phone")}
+                      />
+                      <button className="font-bold text-white px-6 h-full bg-gradient-to-b from-[#298BFD] to-[#3982FD] drop-shadow-lg">
+                        SIGN UP
+                      </button>
+                    </form>
+                    <button className="font-bold ml-1.5 bg-white p-3 px-6 text-[#035FF8] drop-shadow-xl">
+                      LEARN MORE
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
