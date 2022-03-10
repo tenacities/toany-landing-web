@@ -331,7 +331,7 @@ function App() {
       <div className="w-screen" style={{ height: pageHeight }}>
         <section className="w-screen" style={{ height: sceneInfos[0]?.height }}>
           <div className="sticky block top-0 h-screen w-screen bg-white">
-            <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full overflow-x-hidden">
+            <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full overflow-hidden">
               <div className="absolute background top-0 w-full h-full" />
               <img
                 className="absolute w-1/3 top-0 left-0"
