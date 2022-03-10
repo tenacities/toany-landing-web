@@ -154,34 +154,17 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
       } else {
         window.isAutoScrolling = false;
       }
+
+      if (window.scrollDirection == "up") {
+        window.isAutoScrolling = false;
+      }
     },
   });
   // page3
   ret.push({
-    height: windowHeight,
+    height: windowHeight * 2,
     onScroll(percent: number) {
       console.log(`page3: ${percent}`);
-    },
-  });
-  // page4
-  ret.push({
-    height: windowHeight,
-    onScroll(percent: number) {
-      console.log(`page4: ${percent}`);
-    },
-  });
-  // page5
-  ret.push({
-    height: windowHeight,
-    onScroll(percent: number) {
-      console.log(`page5: ${percent}`);
-    },
-  });
-  // page6
-  ret.push({
-    height: windowHeight,
-    onScroll(percent: number) {
-      console.log(`page6: ${percent}`);
     },
   });
   return ret;
@@ -441,13 +424,13 @@ function App() {
             <div className="relative w-screen h-screen">
               <div className="absolute top-0 w-screen h-screen background">
                 <img
-                  className="absolute max-w-[100vw] left-1/2 h-[70vh] top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000"
+                  className="absolute sm:w-1/2 left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000"
                   ref={scene2Human1}
                   src={require("./images/2page/human 2.png")}
                   alt="human"
                 />
                 <img
-                  className="absolute max-w-[100vw] left-1/2 h-[70vh] top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000 lg:-translate-x-full"
+                  className="absolute sm:w-1/2 left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000 lg:-translate-x-full"
                   ref={scene2Human2}
                   src={require("./images/4page/human 3.png")}
                   alt="human2"
@@ -486,6 +469,32 @@ function App() {
                     <button className="font-bold w-fit md:w-auto mt-6 md:mt-0 ml-1.5 bg-white p-3 px-6 text-[#035FF8] drop-shadow-xl">
                       LEARN MORE
                     </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="w-screen" style={{ height: sceneInfos[2]?.height }}>
+          <div className="sticky top-0 h-screen w-screen bg-red-500">
+            <div className="relative w-screen h-screen">
+              <div className="absolute top-0 w-screen h-screen bg-gray-600">
+                <div className="absolute w-screen h-screen bg-black transition-opacity duration-500 opacity-60" />
+                <div className="absolute flex flex-col font-bold text-white w-screen h-screen justify-start items-center pt-[15vh] z-10">
+                  <div className="text-6xl mb-12">소개영상</div>
+                  <div className="relative w-full h-auto pt-[50%]">
+                    <div className="absolute top-0 left-0 w-full h-full">
+                      <iframe
+                        style={{margin: "auto"}}
+                        width="90%"
+                        height="100%"
+                        src="https://www.youtube.com/embed/QvGJWQrEOZs"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
