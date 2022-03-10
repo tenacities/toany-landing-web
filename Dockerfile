@@ -13,4 +13,4 @@ RUN npm install -g npm@8.5.3
 RUN npm install -g serve
 COPY --from=build /usr/src/app/build ./dist
 EXPOSE 2002
-CMD serve ./dist -l 2002
+CMD serve ./dist -C -l 2002
