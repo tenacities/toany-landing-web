@@ -442,13 +442,13 @@ function App() {
                   <div className="flex flex-col md:flex-row justify-center lg:justify-between items-center mt-8">
                     <form className='h-12' onSubmit={handleSubmit(onSubmit)}>
                       <input
-                        className="drop-shadow-xl h-full px-6 box-border w-44 md:mr:12"
+                        className="drop-shadow-xl h-full px-6 box-border w-44 md:mr:12 rounded-tr-none rounded-br-none rounded-tl-md rounded-bl-md"
                         type="tel"
                         placeholder='010-0000-0000'
                         maxLength={13}
                         {...register("phone")}
                       />
-                      <button className="font-bold text-white px-6 h-full bg-gradient-to-b from-[#298BFD] to-[#3982FD] drop-shadow-lg">
+                      <button className="font-bold text-white px-6 h-full bg-gradient-to-b from-[#298BFD] to-[#3982FD] drop-shadow-lg rounded-tr-md rounded-br-md">
                         SIGN UP
                       </button>
                     </form>
