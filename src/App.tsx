@@ -31,6 +31,7 @@ interface Scene1Dom {
 }
 
 interface Scene2Dom {
+  scene1: HTMLElement | null;
   human1: HTMLImageElement | null;
   dim: HTMLDivElement | null;
   description: HTMLDivElement | null;
@@ -136,6 +137,19 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
           dom.description?.classList?.add("translate-y-1/4");
         }
       }
+
+      if (0.7 < percent) {
+        if (
+          !isMobile &&
+          !window.isAutoScrolling &&
+          window.scrollDirection == "down"
+        ) {
+          window.scrollTo({ left: 0, top: (dom.scene1?.clientHeight || 0) + this.height, behavior: "smooth" });
+          window.isAutoScrolling = true;
+        }
+      } else {
+        window.isAutoScrolling = false;
+      }
     },
   });
   // page3
@@ -174,6 +188,7 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
  * @constructor
  */
 function App() {
+  const scene1Section = useRef<HTMLElement>(null);
   const scene1Human = useRef<HTMLImageElement>(null);
   const scene1Line1 = useRef<HTMLImageElement>(null);
   const scene1Line2 = useRef<HTMLImageElement>(null);
@@ -264,6 +279,7 @@ function App() {
           break;
         case 1:
           currentPageInfo.onScroll(currentPagePercent, {
+            scene1: scene1Section.current,
             human1: scene2Human1.current,
             dim: scene2Dim.current,
             description: scene2Description.current,
@@ -329,7 +345,7 @@ function App() {
     <>
       <Header fontColor={headerFontColor} />
       <div className="w-screen" style={{ height: pageHeight }}>
-        <section className="w-screen" style={{ height: sceneInfos[0]?.height }}>
+        <section ref={scene1Section} className="w-screen" style={{ height: sceneInfos[0]?.height }}>
           <div className="sticky block top-0 h-screen w-screen bg-white">
             <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full overflow-hidden">
               <div className="absolute background top-0 w-full h-full" />
@@ -397,10 +413,18 @@ function App() {
                   repellat suscipit. Consequuntur corporis cum dignissimos et
                   eum facere odit provident sint vitae!
                 </div>
-                <div className="absolute font-bold bottom-[15vh] left-1/2 -translate-x-1/2">
+                <div
+                  className={`absolute font-bold bottom-[15vh] left-1/2 -translate-x-1/2 ${
+                    isMobile && "hidden"
+                  }`}
+                >
                   scroll
                 </div>
-                <div className="absolute border-r-2 h-[13vh] bottom-0 left-1/2 -translate-x-1/2" />
+                <div
+                  className={`absolute border-r-2 h-[13vh] bottom-0 left-1/2 -translate-x-1/2 ${
+                    isMobile && "hidden"
+                  }`}
+                />
               </div>
             </div>
           </div>
