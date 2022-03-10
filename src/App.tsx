@@ -192,6 +192,7 @@ function App() {
   const scene2Event = useRef<HTMLDivElement>(null);
 
   const { height: windowHeight } = useWindowSize();
+  const maxWindowHeight = useRef(0);
   const prevScrollY = useRef(0);
   const { y: scrollY } = useWindowScroll();
   window.scrollDirection = prevScrollY.current <= scrollY ? "down" : "up";
@@ -203,7 +204,10 @@ function App() {
 
   // 페이지 정보 초기화
   useEffect(() => {
-    setSceneInfos(generatePageInfos(windowHeight));
+    if (maxWindowHeight.current < windowHeight) {
+      maxWindowHeight.current = windowHeight;
+      setSceneInfos(generatePageInfos(windowHeight));
+    }
   }, [windowHeight]);
 
   // 전체 페이지 높이 설정
