@@ -5,7 +5,7 @@ import { scaleDom, translateDom } from "./utils/StyleUtils";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { isMobile } from "react-device-detect";
-import {formatPhoneNumber} from './utils/StringUtils';
+import { formatPhoneNumber } from "./utils/StringUtils";
 
 interface SceneInfo {
   height: number;
@@ -31,11 +31,12 @@ interface Scene1Dom {
 }
 
 interface Scene2Dom {
+  scene1: HTMLElement | null;
   human1: HTMLImageElement | null;
   dim: HTMLDivElement | null;
   description: HTMLDivElement | null;
   human2: HTMLImageElement | null;
-  event:  HTMLDivElement | null;
+  event: HTMLDivElement | null;
 }
 
 /**
@@ -109,13 +110,13 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
 
       if (0.5 <= percent) {
         dom.human2?.classList?.remove("opacity-0");
-        dom.event?.classList?.remove('opacity-0');
+        dom.event?.classList?.remove("opacity-0");
       } else {
         dom.human2?.classList?.add("opacity-0");
         dom.event?.classList?.add("opacity-0");
       }
 
-      if (percent <= .1) {
+      if (percent <= 0.1) {
         dom.dim?.classList?.add("!opacity-0");
         dom.description?.classList?.add("opacity-0");
         dom.description?.classList?.remove("-translate-y-1/2");
@@ -125,45 +126,45 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
         dom.description?.classList?.remove("translate-y-1/4");
         dom.description?.classList?.remove("-translate-y-full");
         dom.description?.classList?.add("-translate-y-1/2");
-      } else if (.5 < percent) {
+      } else if (0.5 < percent) {
         dom.dim?.classList?.add("!opacity-0");
         dom.description?.classList?.add("opacity-0");
         dom.description?.classList?.remove("-translate-y-1/2");
 
-        if (window.scrollDirection == 'down') {
+        if (window.scrollDirection == "down") {
           dom.description?.classList?.add("-translate-y-full");
         } else {
           dom.description?.classList?.add("translate-y-1/4");
         }
       }
+
+      if (0.7 < percent) {
+        if (
+          !isMobile &&
+          !window.isAutoScrolling &&
+          window.scrollDirection == "down"
+        ) {
+          window.scrollTo({
+            left: 0,
+            top: (dom.scene1?.clientHeight || 0) + this.height,
+            behavior: "smooth",
+          });
+          window.isAutoScrolling = true;
+        }
+      } else {
+        window.isAutoScrolling = false;
+      }
+
+      if (window.scrollDirection == "up") {
+        window.isAutoScrolling = false;
+      }
     },
   });
   // page3
   ret.push({
-    height: windowHeight,
+    height: windowHeight * 2,
     onScroll(percent: number) {
       console.log(`page3: ${percent}`);
-    },
-  });
-  // page4
-  ret.push({
-    height: windowHeight,
-    onScroll(percent: number) {
-      console.log(`page4: ${percent}`);
-    },
-  });
-  // page5
-  ret.push({
-    height: windowHeight,
-    onScroll(percent: number) {
-      console.log(`page5: ${percent}`);
-    },
-  });
-  // page6
-  ret.push({
-    height: windowHeight,
-    onScroll(percent: number) {
-      console.log(`page6: ${percent}`);
     },
   });
   return ret;
@@ -174,6 +175,7 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
  * @constructor
  */
 function App() {
+  const scene1Section = useRef<HTMLElement>(null);
   const scene1Human = useRef<HTMLImageElement>(null);
   const scene1Line1 = useRef<HTMLImageElement>(null);
   const scene1Line2 = useRef<HTMLImageElement>(null);
@@ -192,6 +194,7 @@ function App() {
   const scene2Event = useRef<HTMLDivElement>(null);
 
   const { height: windowHeight } = useWindowSize();
+  const maxWindowHeight = useRef(0);
   const prevScrollY = useRef(0);
   const { y: scrollY } = useWindowScroll();
   window.scrollDirection = prevScrollY.current <= scrollY ? "down" : "up";
@@ -203,7 +206,10 @@ function App() {
 
   // 페이지 정보 초기화
   useEffect(() => {
-    setSceneInfos(generatePageInfos(windowHeight));
+    if (maxWindowHeight.current < windowHeight) {
+      maxWindowHeight.current = windowHeight;
+      setSceneInfos(generatePageInfos(windowHeight));
+    }
   }, [windowHeight]);
 
   // 전체 페이지 높이 설정
@@ -260,6 +266,7 @@ function App() {
           break;
         case 1:
           currentPageInfo.onScroll(currentPagePercent, {
+            scene1: scene1Section.current,
             human1: scene2Human1.current,
             dim: scene2Dim.current,
             description: scene2Description.current,
@@ -283,17 +290,16 @@ function App() {
     phone: string;
   };
 
-  const { register, handleSubmit, watch, setValue } =
-    useForm<FormValues>();
+  const { register, handleSubmit, watch, setValue } = useForm<FormValues>();
 
-  let phoneNumber = watch('phone', '');
-  phoneNumber = phoneNumber.replaceAll('-', '');
-  phoneNumber = phoneNumber.replace(/(^\d{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
+  let phoneNumber = watch("phone", "");
+  phoneNumber = phoneNumber.replaceAll("-", "");
+  phoneNumber = phoneNumber.replace(/(^\d{3})([0-9]+)([0-9]{4})/, "$1-$2-$3");
   phoneNumber = formatPhoneNumber(phoneNumber);
 
   useEffect(() => {
-    setValue('phone', phoneNumber);
-  }, [phoneNumber])
+    setValue("phone", phoneNumber);
+  }, [phoneNumber]);
 
   const onSubmit = (data: FormValues) => {
     data.phone = data.phone.replaceAll("-", "");
@@ -325,9 +331,13 @@ function App() {
     <>
       <Header fontColor={headerFontColor} />
       <div className="w-screen" style={{ height: pageHeight }}>
-        <section className="w-screen" style={{ height: sceneInfos[0]?.height }}>
+        <section
+          ref={scene1Section}
+          className="w-screen"
+          style={{ height: sceneInfos[0]?.height }}
+        >
           <div className="sticky block top-0 h-screen w-screen bg-white">
-            <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full overflow-x-clip">
+            <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full overflow-hidden">
               <div className="absolute background top-0 w-full h-full" />
               <img
                 className="absolute w-1/3 top-0 left-0"
@@ -393,10 +403,18 @@ function App() {
                   repellat suscipit. Consequuntur corporis cum dignissimos et
                   eum facere odit provident sint vitae!
                 </div>
-                <div className="absolute font-bold bottom-[15vh] left-1/2 -translate-x-1/2">
+                <div
+                  className={`absolute font-bold bottom-[15vh] left-1/2 -translate-x-1/2 ${
+                    isMobile && "hidden"
+                  }`}
+                >
                   scroll
                 </div>
-                <div className="absolute border-r-2 h-[13vh] bottom-0 left-1/2 -translate-x-1/2" />
+                <div
+                  className={`absolute border-r-2 h-[13vh] bottom-0 left-1/2 -translate-x-1/2 ${
+                    isMobile && "hidden"
+                  }`}
+                />
               </div>
             </div>
           </div>
@@ -406,13 +424,13 @@ function App() {
             <div className="relative w-screen h-screen">
               <div className="absolute top-0 w-screen h-screen background">
                 <img
-                  className="absolute max-w-[100vw] left-1/2 h-[70vh] top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000"
+                  className="absolute sm:w-1/2 left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000"
                   ref={scene2Human1}
                   src={require("./images/2page/human 2.png")}
                   alt="human"
                 />
                 <img
-                  className="absolute max-w-[100vw] left-1/2 h-[70vh] top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000 lg:-translate-x-full"
+                  className="absolute sm:w-1/2 left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000 lg:-translate-x-full"
                   ref={scene2Human2}
                   src={require("./images/4page/human 3.png")}
                   alt="human2"
@@ -435,22 +453,48 @@ function App() {
                   <div className="w-screen lg:w-auto font-bold text-5xl md:text-6xl text-white text-center lg:text-right">
                     사전신청 이벤트
                   </div>
-                  <div className="flex flex-row justify-center lg:justify-between items-stretch mt-8">
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="flex flex-col md:flex-row justify-center lg:justify-between items-center mt-8">
+                    <form className="h-12" onSubmit={handleSubmit(onSubmit)}>
                       <input
-                        className="drop-shadow-xl h-full px-6 box-border w-44 md:mr:12"
+                        className="drop-shadow-xl h-full px-6 box-border w-44 md:mr:12 rounded-tr-none rounded-br-none rounded-tl-md rounded-bl-md"
                         type="tel"
-                        placeholder='010-0000-0000'
+                        placeholder="010-0000-0000"
                         maxLength={13}
                         {...register("phone")}
                       />
-                      <button className="font-bold text-white px-6 h-full bg-gradient-to-b from-[#298BFD] to-[#3982FD] drop-shadow-lg">
+                      <button className="font-bold text-white px-6 h-full bg-gradient-to-b from-[#298BFD] to-[#3982FD] drop-shadow-lg rounded-tr-md rounded-br-md">
                         SIGN UP
                       </button>
                     </form>
-                    <button className="font-bold ml-1.5 bg-white p-3 px-6 text-[#035FF8] drop-shadow-xl">
+                    <button className="font-bold w-fit md:w-auto mt-6 md:mt-0 ml-1.5 bg-white p-3 px-6 text-[#035FF8] drop-shadow-xl">
                       LEARN MORE
                     </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="w-screen" style={{ height: sceneInfos[2]?.height }}>
+          <div className="sticky top-0 h-screen w-screen bg-red-500">
+            <div className="relative w-screen h-screen">
+              <div className="absolute top-0 w-screen h-screen bg-gray-600">
+                <div className="absolute w-screen h-screen bg-black transition-opacity duration-500 opacity-60" />
+                <div className="absolute flex flex-col font-bold text-white w-screen h-screen justify-start items-center pt-[15vh] z-10">
+                  <div className="text-6xl mb-12">소개영상</div>
+                  <div className="relative w-full h-auto pt-[50%]">
+                    <div className="absolute top-0 left-0 w-full h-full">
+                      <iframe
+                        style={{margin: "auto"}}
+                        width="90%"
+                        height="100%"
+                        src="https://www.youtube.com/embed/QvGJWQrEOZs"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
