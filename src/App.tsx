@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { isMobile } from "react-device-detect";
 import { formatPhoneNumber } from "./utils/StringUtils";
+import { useTranslation } from "react-i18next";
 
 interface SceneInfo {
   height: number;
@@ -201,6 +202,7 @@ function App() {
   prevScrollY.current = scrollY;
   const [sceneInfos, setSceneInfos] = useState<Array<SceneInfo>>([]);
   const [pageHeight, setPageHeight] = useState(0);
+  const { t } = useTranslation();
 
   let headerFontColor: "white" | "black" = "white";
 
@@ -368,10 +370,10 @@ function App() {
                 className={`absolute w-screen md:w-1/2 md:mt-24 right-0 top-1/3 text-center transition-opacity duration-150 ease-in-out`}
               >
                 <div className="font-bold text-4xl lg:text-7xl md:text-6xl text-white tracking-wide">
-                  VR 시대는 온다
+                  {t("home:page1.appDownTitle")}
                 </div>
                 <button className="rounded-full bg-[#81A9EF] text-white px-10 py-2 mt-7 mr-8 drop-shadow-lg">
-                  앱 다운로드
+                  {t("home:page1.appDownload")}
                 </button>
               </div>
               <div
@@ -394,10 +396,11 @@ function App() {
                 ref={scene1Description}
                 className="absolute flex flex-col md:flex-row md:justify-between top-[55vh] lg:px-[10vh] md:px-10 w-full h-[45vh] opacity-0 transition-opacity duration-500"
               >
-                <div className="font-bold lg:text-6xl md:text-4xl text-3xl md:mt-6 mt-3 !leading-snug text-center md:text-left min-w-fit">
-                  VR은 일상에 <br /> 녹아들어야 한다
+                <div className="font-bold lg:text-6xl md:text-5xl text-3xl md:mt-6 mt-3 !leading-snug text-center md:text-left md:min-w-min md:max-w-sm">
+                  {t("home:page1.descriptionTitle1")} <br />{" "}
+                  {t("home:page1.descriptionTitle2")}
                 </div>
-                <div className="lg:text-3xl md:text-2xl text-xl md:mt-6 md:mr-0 mr-2 max-w-screen-sm text-right">
+                <div className="lg:text-3xl md:text-2xl text-xl md:mt-6 md:mr-0 mr-2 md:max-w-sm text-right">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Dolore, eligendi, nulla. Ad aliquid ducimus in neque odit
                   repellat suscipit. Consequuntur corporis cum dignissimos et
@@ -441,17 +444,17 @@ function App() {
                 />
                 <div
                   ref={scene2Description}
-                  className="absolute w-fit font-bold text-5xl md:text-6xl lg:text-7xl !leading-snug text-white top-1/2 left-1/2 lg:left-3/4 -translate-x-1/2 translate-y-1/4 transition-all duration-500 opacity-0"
+                  className="absolute w-fit font-bold text-5xl md:text-6xl !leading-snug text-white top-1/2 left-1/2 lg:left-3/4 -translate-x-1/2 translate-y-1/4 transition-all duration-500 opacity-0"
                 >
-                  <div>메타버스도</div>
-                  <div>그래야 한다</div>
+                  <div>{t("home:page2.description1")}</div>
+                  <div>{t("home:page2.description2")}</div>
                 </div>
                 <div
                   ref={scene2Event}
                   className="absolute w-fit top-1/2 left-1/2 lg:left-3/4 lg:pr-16 -translate-x-1/2 -translate-y-1/2 duration-500 opacity-0"
                 >
                   <div className="w-screen lg:w-auto font-bold text-5xl md:text-6xl text-white text-center lg:text-right">
-                    사전신청 이벤트
+                    {t("home:page2.eventTitle")}
                   </div>
                   <div className="flex flex-col md:flex-row justify-center lg:justify-between items-center mt-8">
                     <form className="h-12" onSubmit={handleSubmit(onSubmit)}>
@@ -496,23 +499,27 @@ function App() {
                   <input
                     className="w-full p-3"
                     type="text"
-                    placeholder="아이디를 입력하세요."
+                    placeholder={t("home:page3.inputIdPlaceholder")}
                   />
                   <input
                     className="w-full p-3 mt-4"
                     type="password"
-                    placeholder="비밀번호를 입력하세요."
+                    placeholder={t("home:page3.inputPasswordPlaceholder")}
                   />
                   <div className="mt-3 ml-auto">
-                    <button className="mr-4 text-white">회원가입</button>
-                    <button className="text-white">비밀번호 찾기</button>
+                    <button className="mr-4 text-white">
+                      {t("home:page3.signup")}
+                    </button>
+                    <button className="text-white">
+                      {t("home:page3.findPassword")}
+                    </button>
                   </div>
                   <button className="w-full text-white text-center mt-3 p-3 bg-[#1E2F59]">
-                    로그인
+                    {t("home:page3.signIn")}
                   </button>
                   <hr className="w-full my-6 border-gray-500" />
                   <div className="text-white">
-                    SNS 계정으로 간편하게 로그인 가능합니다.
+                    {t("home:page3.snsSignInDescription")}
                   </div>
                   <div className="flex justify-evenly w-full my-6">
                     <button className="max-w-[18%] rounded-full overflow-hidden">

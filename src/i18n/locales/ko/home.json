@@ -1,0 +1,21 @@
+{
+  "page1": {
+    "appDownTitle": "VR 시대는 온다",
+    "appDownload": "앱 다운로드",
+    "descriptionTitle1": "VR은 일상에",
+    "descriptionTitle2": "녹아들어야 한다"
+  },
+  "page2": {
+    "description1":"메타버스도",
+    "description2":"그래야 한다",
+    "eventTitle": "사전등록 이벤트"
+  },
+  "page3": {
+    "inputIdPlaceholder": "아이디를 입력하세요",
+    "inputPasswordPlaceholder": "비밀번호를 입력하세요",
+    "signup": "회원가입",
+    "findPassword": "비밀번호 찾기",
+    "signIn": "로그인",
+    "snsSignInDescription": "SNS 계정으로 간편하게 로그인 가능합니다."
+  }
+}
