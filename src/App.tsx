@@ -493,19 +493,46 @@ function App() {
               </div>
               <div className="flex flex-col justify-center items-center w-screen h-screen">
                 <div className="flex flex-col items-center justify-center min-w-[30vw] p-3 bg-black">
-                  <input className="w-full p-3" type="text" placeholder="아이디를 입력하세요."/>
-                  <input className="w-full p-3 mt-4" type="password" placeholder="비밀번호를 입력하세요."/>
+                  <input
+                    className="w-full p-3"
+                    type="text"
+                    placeholder="아이디를 입력하세요."
+                  />
+                  <input
+                    className="w-full p-3 mt-4"
+                    type="password"
+                    placeholder="비밀번호를 입력하세요."
+                  />
                   <div className="mt-3 ml-auto">
                     <button className="mr-4 text-white">회원가입</button>
                     <button className="text-white">비밀번호 찾기</button>
                   </div>
-                  <button className="w-full text-white text-center mt-3 p-3 bg-[#1E2F59]">로그인</button>
-                  <hr className="w-full my-6 border-gray-500"/>
-                  <div className="text-white">SNS 계정으로 간편하게 로그인 가능합니다.</div>
+                  <button className="w-full text-white text-center mt-3 p-3 bg-[#1E2F59]">
+                    로그인
+                  </button>
+                  <hr className="w-full my-6 border-gray-500" />
+                  <div className="text-white">
+                    SNS 계정으로 간편하게 로그인 가능합니다.
+                  </div>
                   <div className="flex justify-evenly w-full my-6">
-                    <button className="max-w-[18%] rounded-full overflow-hidden"><img src={require("./images/3page/sns_kakao.png")} alt="kakao login"/></button>
-                    <button className="max-w-[18%] rounded-full overflow-hidden"><img src={require("./images/3page/sns_google.png")} alt="google login"/></button>
-                    <button className="max-w-[18%] rounded-full overflow-hidden"><img src={require("./images/3page/sns_apple.png")} alt="apple login"/></button>
+                    <button className="max-w-[18%] rounded-full overflow-hidden">
+                      <img
+                        src={require("./images/3page/sns_kakao.png")}
+                        alt="kakao login"
+                      />
+                    </button>
+                    <button className="max-w-[18%] rounded-full overflow-hidden">
+                      <img
+                        src={require("./images/3page/sns_google.png")}
+                        alt="google login"
+                      />
+                    </button>
+                    <button className="max-w-[18%] rounded-full overflow-hidden">
+                      <img
+                        src={require("./images/3page/sns_apple.png")}
+                        alt="apple login"
+                      />
+                    </button>
                   </div>
                 </div>
               </div>
