@@ -448,7 +448,7 @@ function App() {
                 </div>
                 <div
                   ref={scene2Event}
-                  className="absolute top-1/2 right-0 lg:pr-16 -translate-y-1/2 duration-500 opacity-0"
+                  className="absolute w-fit top-1/2 left-1/2 lg:left-3/4 lg:pr-16 -translate-x-1/2 -translate-y-1/2 duration-500 opacity-0"
                 >
                   <div className="w-screen lg:w-auto font-bold text-5xl md:text-6xl text-white text-center lg:text-right">
                     사전신청 이벤트
