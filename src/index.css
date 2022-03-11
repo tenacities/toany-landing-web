@@ -26,11 +26,15 @@ code {
 }
 
 .header-right {
-    @apply flex;
+    @apply flex items-center;
 }
 
-.header-menu {
-    @apply font-bold mr-2;
+.header-right.active .header-lang {
+    @apply w-0;
+}
+
+.header-right.active .header-lang-list {
+    @apply w-auto;
 }
 
 @layer utilities {

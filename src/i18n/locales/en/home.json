@@ -1,0 +1,21 @@
+{
+  "page1": {
+    "appDownTitle": "The era of VR is coming.",
+    "appDownload": "Download",
+    "descriptionTitle1": "VR needs to be permeated",
+    "descriptionTitle2": "into everyday life."
+  },
+  "page2": {
+    "description1":"Metaverse should",
+    "description2":"be like that too.",
+    "eventTitle": "Pre registration"
+  },
+  "page3": {
+    "inputIdPlaceholder": "Input your ID",
+    "inputPasswordPlaceholder": "Input your password",
+    "signup": "Create account",
+    "findPassword": "Forgot password?",
+    "signIn": "Sign in",
+    "snsSignInDescription": "You can easily sign in with your SNS account"
+  }
+}
