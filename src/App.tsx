@@ -424,13 +424,13 @@ function App() {
             <div className="relative w-screen h-screen">
               <div className="absolute top-0 w-screen h-screen background">
                 <img
-                  className="absolute sm:w-1/2 left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000"
+                  className="absolute sm:w-auto md:w-1/2 sm:max-w-[50vh] left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000"
                   ref={scene2Human1}
                   src={require("./images/2page/human 2.png")}
                   alt="human"
                 />
                 <img
-                  className="absolute sm:w-1/2 left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000 lg:-translate-x-full"
+                  className="absolute sm:w-auto md:w-1/2 sm:max-w-[50vh] left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000 lg:-translate-x-full"
                   ref={scene2Human2}
                   src={require("./images/3page/human 3.png")}
                   alt="human2"
