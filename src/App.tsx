@@ -197,7 +197,7 @@ function App() {
   const maxWindowHeight = useRef(0);
   const prevScrollY = useRef(0);
   const { y: scrollY } = useWindowScroll();
-  window.scrollDirection = prevScrollY.current <= scrollY ? "down" : "up";
+  window.scrollDirection = prevScrollY.current < scrollY ? "down" : "up";
   prevScrollY.current = scrollY;
   const [sceneInfos, setSceneInfos] = useState<Array<SceneInfo>>([]);
   const [pageHeight, setPageHeight] = useState(0);
