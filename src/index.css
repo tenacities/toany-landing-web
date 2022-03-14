@@ -117,10 +117,9 @@ section {
 }
 
 .youtube-video-container {
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    @apply max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg
+    position: sticky;
+    top: 0;
+    @apply min-w-[100vw] min-h-[100vh] max-h-[100vh];
 }
 
 .youtube-video-container::after {

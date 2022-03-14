@@ -14,7 +14,7 @@ interface SceneInfo {
   onScroll(percent: number, dom: SceneDOM): void;
 }
 
-type SceneDOM = Scene1Dom | Scene2Dom;
+type SceneDOM = Scene1Dom | Scene2Dom | Scene3Dom;
 
 interface Scene1Dom {
   human: HTMLImageElement | null;
@@ -38,6 +38,10 @@ interface Scene2Dom {
   description: HTMLDivElement | null;
   human2: HTMLImageElement | null;
   event: HTMLDivElement | null;
+}
+
+interface Scene3Dom {
+  dim: HTMLDivElement | null;
 }
 
 /**
@@ -164,8 +168,12 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
   // page3
   ret.push({
     height: windowHeight * 2,
-    onScroll(percent: number) {
-      console.log(`page3: ${percent}`);
+    onScroll(percent: number, dom:Scene3Dom) {
+      if (.1 < percent) {
+        dom.dim?.classList?.remove("!opacity-0");
+      } else {
+        dom.dim?.classList?.add("!opacity-0");
+      }
     },
   });
   return ret;
@@ -193,6 +201,8 @@ function App() {
   const scene2Description = useRef<HTMLDivElement>(null);
   const scene2Human2 = useRef<HTMLImageElement>(null);
   const scene2Event = useRef<HTMLDivElement>(null);
+
+  const scene3Dim = useRef<HTMLDivElement>(null);
 
   const { height: windowHeight } = useWindowSize();
   const maxWindowHeight = useRef(0);
@@ -275,6 +285,11 @@ function App() {
             human2: scene2Human2.current,
             event: scene2Event.current,
           } as Scene2Dom);
+          break;
+        case 2:
+          currentPageInfo.onScroll(currentPagePercent, {
+            dim: scene3Dim.current,
+          } as Scene3Dom);
           break;
         default:
           break;
@@ -481,65 +496,66 @@ function App() {
         <section className="w-screen" style={{ height: sceneInfos[2]?.height }}>
           <div className="relative w-screen h-screen">
             <div className="absolute w-screen h-[200vh] top-0">
-              <div className="relative flex flex-col font-bold text-white w-screen h-screen justify-start items-center pt-[15vh]">
-                <div className="text-6xl mb-12 text-center">소개영상</div>
+              <div className="relative w-screen h-full">
                 <div className="youtube-video-container">
                   <iframe
                     className="youtube-video"
-                    src="https://www.youtube.com/embed/QvGJWQrEOZs"
+                    src="https://www.youtube.com/embed/wDU6Y1PNAt8?autoplay=1&mute=1&loop=1&controls=0&rel=0&iv_load_policy=3"
                     title="YouTube video player"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
                 </div>
-              </div>
-              <div className="flex flex-col justify-center items-center w-screen h-screen">
-                <div className="flex flex-col items-center justify-center min-w-[30vw] p-3 bg-black">
-                  <input
-                    className="w-full p-3"
-                    type="text"
-                    placeholder={t("home:page3.inputIdPlaceholder")}
-                  />
-                  <input
-                    className="w-full p-3 mt-4"
-                    type="password"
-                    placeholder={t("home:page3.inputPasswordPlaceholder")}
-                  />
-                  <div className="mt-3 ml-auto">
-                    <button className="mr-4 text-white">
-                      {t("home:page3.signup")}
+                <div className="absolute top-0 left-0 flex flex-col justify-center items-center w-screen h-full">
+                  <div style={{ height: sceneInfos[2]?.height / 2 }} />
+                  <div ref={scene3Dim} className="absolute top-0 left-0 w-screen h-full bg-black transition-opacity duration-500 opacity-60 !opacity-0" />
+                  <div className="flex flex-col items-center justify-center min-w-[30vw] p-3 bg-black z-10">
+                    <input
+                      className="w-full p-3"
+                      type="text"
+                      placeholder={t("home:page3.inputIdPlaceholder")}
+                    />
+                    <input
+                      className="w-full p-3 mt-4"
+                      type="password"
+                      placeholder={t("home:page3.inputPasswordPlaceholder")}
+                    />
+                    <div className="mt-3 ml-auto">
+                      <button className="mr-4 text-white">
+                        {t("home:page3.signup")}
+                      </button>
+                      <button className="text-white">
+                        {t("home:page3.findPassword")}
+                      </button>
+                    </div>
+                    <button className="w-full text-white text-center mt-3 p-3 bg-[#1E2F59]">
+                      {t("home:page3.signIn")}
                     </button>
-                    <button className="text-white">
-                      {t("home:page3.findPassword")}
-                    </button>
-                  </div>
-                  <button className="w-full text-white text-center mt-3 p-3 bg-[#1E2F59]">
-                    {t("home:page3.signIn")}
-                  </button>
-                  <hr className="w-full my-6 border-gray-500" />
-                  <div className="text-white">
-                    {t("home:page3.snsSignInDescription")}
-                  </div>
-                  <div className="flex justify-evenly w-full my-6">
-                    <button className="max-w-[18%] rounded-full overflow-hidden">
-                      <img
-                        src={require("./images/3page/sns_kakao.png")}
-                        alt="kakao login"
-                      />
-                    </button>
-                    <button className="max-w-[18%] rounded-full overflow-hidden">
-                      <img
-                        src={require("./images/3page/sns_google.png")}
-                        alt="google login"
-                      />
-                    </button>
-                    <button className="max-w-[18%] rounded-full overflow-hidden">
-                      <img
-                        src={require("./images/3page/sns_apple.png")}
-                        alt="apple login"
-                      />
-                    </button>
+                    <hr className="w-full my-6 border-gray-500" />
+                    <div className="text-white">
+                      {t("home:page3.snsSignInDescription")}
+                    </div>
+                    <div className="flex justify-evenly w-full my-6">
+                      <button className="max-w-[18%] rounded-full overflow-hidden">
+                        <img
+                          src={require("./images/3page/sns_kakao.png")}
+                          alt="kakao login"
+                        />
+                      </button>
+                      <button className="max-w-[18%] rounded-full overflow-hidden">
+                        <img
+                          src={require("./images/3page/sns_google.png")}
+                          alt="google login"
+                        />
+                      </button>
+                      <button className="max-w-[18%] rounded-full overflow-hidden">
+                        <img
+                          src={require("./images/3page/sns_apple.png")}
+                          alt="apple login"
+                        />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
