@@ -2,15 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import { Provider as AlertProvider } from "react-alert";
 import reportWebVitals from "./reportWebVitals";
-import axios from "axios";
 import "./i18n";
+import Alert from './components/Alert';
 
 ReactDOM.render(
-  <App />,
-  // <React.StrictMode>
-  //   <App />
-  // </React.StrictMode>,
+  <AlertProvider template={Alert} containerStyle={{pointerEvents: 'auto'}}>
+    <App />,{/*// <React.StrictMode>*/}
+    {/*//   <App />*/}
+    {/*// </React.StrictMode>*/}
+  </AlertProvider>,
   document.getElementById("root")
 );
 
@@ -22,8 +24,3 @@ reportWebVitals();
 if ("scrollRestoration" in window.history) {
   window.history.scrollRestoration = "manual";
 }
-
-axios.defaults.baseURL = "https://api.example.com";
-axios.defaults.headers.post = {
-  "Content-Type": "application/json",
-};
