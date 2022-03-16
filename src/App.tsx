@@ -7,6 +7,7 @@ import axios from "axios";
 import { isMobile } from "react-device-detect";
 import { formatPhoneNumber } from "./utils/StringUtils";
 import { useTranslation } from "react-i18next";
+import { useAlert } from "react-alert";
 
 interface SceneInfo {
   height: number;
@@ -213,6 +214,7 @@ function App() {
   const [sceneInfos, setSceneInfos] = useState<Array<SceneInfo>>([]);
   const [pageHeight, setPageHeight] = useState(0);
   const { t } = useTranslation();
+  const alert = useAlert();
 
   let headerFontColor: "white" | "black" = "white";
 
@@ -255,8 +257,6 @@ function App() {
     if (scrollY < 0) {
       currentPagePercent = 0;
     }
-
-    console.log(currentPage, currentPagePercent);
 
     if (currentPageInfo) {
       switch (currentPage) {
@@ -321,12 +321,12 @@ function App() {
   const onSubmit = (data: FormValues) => {
     data.phone = data.phone.replaceAll("-", "");
     if (data.phone.length != 11) {
-      alert("check length");
+      alert.show(t("home:message.checkLen"));
       return;
     }
 
     if (!data.phone.startsWith("010")) {
-      alert("check 010");
+      alert.show(t("home:message.not010"));
       return;
     }
     axios
@@ -336,11 +336,12 @@ function App() {
         },
       })
       .then((res) => {
-        if (res.data.code) alert("duplicated!!");
-        else alert("done!!");
+        if (res.data.code) alert.show(t("home:message.already"));
+        else alert.show(t("home:message.reg complete"));
       })
-      .catch(() => {
-        alert("unknown error!!");
+      .catch((e) => {
+        alert.show("에러는 너굴맨이 처리했다구!");
+        console.error(e);
       });
   };
 
@@ -508,7 +509,7 @@ function App() {
                   />
                 </div>
                 <div className="absolute top-0 left-0 flex flex-col justify-center items-center w-screen h-full">
-                  <div style={{ height: sceneInfos[2]?.height / 2 }} />
+                  <div style={{ height: (sceneInfos[2]?.height || 0) / 2 }} />
                   <div ref={scene3Dim} className="absolute top-0 left-0 w-screen h-full bg-black transition-opacity duration-500 opacity-60 !opacity-0" />
                   <div className="flex flex-col items-center justify-center min-w-[30vw] p-3 bg-black z-10">
                     <input

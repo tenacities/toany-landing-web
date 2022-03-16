@@ -17,5 +17,12 @@
     "findPassword": "Forgot password?",
     "signIn": "Sign in",
     "snsSignInDescription": "You can easily sign in with your SNS account"
+  },
+  "message": {
+    "checkLen": "Please check your phone number length",
+    "not010": "Phone number should be start with 010",
+    "already": "Already registered",
+    "reg complete": "Registration complete",
+    "error": "에러는 너굴맨이 처리했다구!"
   }
 }

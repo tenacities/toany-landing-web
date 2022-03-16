@@ -17,5 +17,12 @@
     "findPassword": "비밀번호 찾기",
     "signIn": "로그인",
     "snsSignInDescription": "SNS 계정으로 간편하게 로그인 가능합니다."
+  },
+  "message": {
+    "checkLen": "휴대폰 번호 길이를 확인해 주세요",
+    "not010": "핸드폰 번호는 010으로 <br> 시작해야 합니다",
+    "already": "이미 등록되었습니다.",
+    "reg complete": "등록되었습니다.",
+    "error": "에러는 너굴맨이 처리했다구!"
   }
 }
