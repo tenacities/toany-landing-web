@@ -330,7 +330,7 @@ function App() {
       return;
     }
     axios
-      .post("https://api.landing.toany.app/pu/reg", data, {
+      .post("https://api.lnd.toany.app/pu/reg", data, {
         headers: {
           "Content-Type": "application/json",
         },
