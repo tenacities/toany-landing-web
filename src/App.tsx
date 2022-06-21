@@ -62,17 +62,21 @@ import page1img from "./images/1page/img1.png";
  * @constructor
  */
 function App() {
+  const pageWrap = useRef<HTMLDivElement>(null);
   const scene1Section = useRef<HTMLDivElement>(null);
 
   // const { height: windowHeight } = useWindowSize();
   // const windowHeight = window.innerHeight;
   // const maxWindowHeight = useRef(0);
-  const prevScrollY = useRef(0);
+  // const prevScrollY = useRef(0);
   // const { y: scrollY } = useWindowScroll();
-  window.scrollDirection = prevScrollY.current < scrollY ? "down" : "up";
-  prevScrollY.current = scrollY;
+  // window.scrollDirection = prevScrollY.current < scrollY ? "down" : "up";
+  // prevScrollY.current = scrollY;
   // const [sceneInfos, setSceneInfos] = useState<Array<SceneInfo>>([]);
   // const [pageHeight, setPageHeight] = useState(0);
+  const lastPageMove = useRef(0);
+  const touchStartXY = useRef<[Number, Number]>([-1, -1]);
+  const [currentPage, setCurrentPage] = useState(0);
   const [potentialUsers, setPotentialUsers] = useState('0');
   const [totalDownloads, setTotalDownloads] = useState('0');
   const { t } = useTranslation();
@@ -89,6 +93,59 @@ function App() {
     const numOfTotalDownloads = 4321;
     setTotalDownloads(numOfTotalDownloads.toString().padStart(5, '0'));
   }, []);
+
+  // 휠 이벤트 핸들링
+  const handleWheelEvent = (e: WheelEvent) => {
+    if (Date.now() - lastPageMove.current < 500 ) return;
+    lastPageMove.current = Date.now();
+
+    if (e.deltaY > 0) {
+      setCurrentPage((prev) => prev + 1);
+    } else {
+      if (currentPage == 0) return;
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handleTouchStartEvent = (e: TouchEvent) => {
+    touchStartXY.current = [e.touches[0].clientX, e.touches[0].clientY];
+  }
+
+  const handleTouchMoveEvent = (e: TouchEvent) => {
+    if (Date.now() - lastPageMove.current < 500 ) return;
+    const y: number = touchStartXY.current.at(1) as number || 0;
+
+    if (y - e.touches[0].clientY < -50) {
+      if (currentPage == 0) return;
+      lastPageMove.current = Date.now();
+      setCurrentPage((prev) => prev - 1);
+    }
+
+    if (y - e.touches[0].clientY > 50) {
+      lastPageMove.current = Date.now();
+      setCurrentPage((prev) => prev + 1);
+    }
+  }
+
+  // 휠, 터치 이벤트 등록
+  useEffect(() => {
+    window.addEventListener('wheel', handleWheelEvent);
+    window.addEventListener('touchstart', handleTouchStartEvent);
+    window.addEventListener('touchmove', handleTouchMoveEvent);
+    return () => {
+      window.removeEventListener('wheel', handleWheelEvent);
+      window.removeEventListener('touchstart', handleTouchStartEvent);
+      window.removeEventListener('touchmove', handleTouchMoveEvent);
+    }
+  }, [currentPage]);
+
+  // 페이지 이동 핸들링
+  useEffect(() => {
+    if (currentPage < 0) {
+      setCurrentPage(0);
+    }
+    console.log(currentPage);
+  }, [currentPage]);
 
   // 페이지 정보 초기화
   // useEffect(() => {
@@ -195,8 +252,8 @@ function App() {
 
   return (
     <>
-      <Header/>
-      <div className="w-screen h-full">
+      <Header fontColor={'white'}/>
+      <div ref={pageWrap} className="w-screen h-full transition-transform ease-in-out duration-500" style={{transform: `translateY(-${currentPage * innerHeight}px)`}}>
         <section ref={scene1Section} className="w-screen h-full">
           <div className="sticky block top-0 w-screen bg-white" style={{height: innerHeight}}>
             <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full">
@@ -222,7 +279,7 @@ function App() {
               {/*모바일 끝*/}
 
               {/*가로형 시작*/}
-              <div className={`absolute invisible md:visible  w-screen md:w-1/2 right-0 top-[20%] text-center transition-opacity duration-150 ease-in-out`}>
+              <div className={`absolute invisible md:visible w-screen md:w-1/2 right-0 top-[20%] text-center transition-opacity duration-150 ease-in-out`}>
                 <div className={`text-white text-5xl font-bold mb-8`}>
                   사전 신청자 수
                 </div>
@@ -256,7 +313,7 @@ function App() {
             </div>
           </div>
         </section>
-        <section className="w-screen" style={{ height: '100vh' }}>
+        <section className="w-screen h-full">
           <div className="sticky top-0 h-screen w-screen bg-red-500">
             <div className="relative w-screen h-screen">
               <div className="absolute top-0 w-screen h-screen background">
