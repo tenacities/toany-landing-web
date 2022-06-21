@@ -21,12 +21,8 @@ code {
     @apply fixed w-screen flex justify-between p-4 md:px-12 z-10 transition-colors ease-in-out;
 }
 
-.header-logo {
-    @apply text-2xl font-bold;
-}
-
 .header-right {
-    @apply flex items-center;
+    @apply flex items-center mt-auto;
 }
 
 .header-right.active .header-lang {
