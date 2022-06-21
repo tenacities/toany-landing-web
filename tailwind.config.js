@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'adobe': ['adobe-gothic-std', ...defaultTheme.fontFamily.sans],
+        'noto-sans': ['Noto Sans KR', '"Noto Sans"', ...defaultTheme.fontFamily.sans],
       }
     },
   },

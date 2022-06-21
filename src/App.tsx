@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
-import { useWindowScroll, useWindowSize } from "react-use";
+// import { useWindowScroll, useWindowSize } from "react-use";
 // import { useForm } from "react-hook-form";
 // import axios from "axios";
 // import { isMobile } from "react-device-detect";
@@ -8,53 +8,54 @@ import { useWindowScroll, useWindowSize } from "react-use";
 import { useTranslation } from "react-i18next";
 // import { useAlert } from "react-alert";
 import page1bg from "./images/1page/bg.png";
+import page1img from "./images/1page/img1.png";
 
-interface SceneInfo {
-  height: number;
+// interface SceneInfo {
+//   height: number;
+//
+//   onScroll(percent: number, dom: SceneDOM): void;
+// }
 
-  onScroll(percent: number, dom: SceneDOM): void;
-}
+// type SceneDOM = Scene1Dom | Scene2Dom | Scene3Dom;
 
-type SceneDOM = Scene1Dom | Scene2Dom | Scene3Dom;
-
-interface Scene1Dom {
-  appDown: HTMLDivElement | null;
-}
-
-interface Scene2Dom {
-}
-
-interface Scene3Dom {
-}
+// interface Scene1Dom {
+//   appDown: HTMLDivElement | null;
+// }
+//
+// interface Scene2Dom {
+// }
+//
+// interface Scene3Dom {
+// }
 
 /**
  * 화면크기에 맞는 씬을 생성한다
  * @param {number} windowHeight 브라우저 높이
  * @return {Array<SceneInfo>}
  */
-function generatePageInfos(windowHeight: number): Array<SceneInfo> {
-  const ret: Array<SceneInfo> = [];
-
-  // page1
-  ret.push({
-    height: windowHeight,
-    onScroll(percent: number, dom: Scene1Dom) {
-    },
-  });
-  // page2
-  ret.push({
-    height: windowHeight,
-    onScroll(percent: number, dom: Scene1Dom) {
-    },
-  });
-  // page3
-  ret.push({
-    height: windowHeight,
-    onScroll(percent: number, dom: Scene1Dom) {
-    },
-  });
-  return ret;
-}
+// function generatePageInfos(windowHeight: number): Array<SceneInfo> {
+//   const ret: Array<SceneInfo> = [];
+//
+//   // page1
+//   ret.push({
+//     height: windowHeight,
+//     onScroll(percent: number, dom: Scene1Dom) {
+//     },
+//   });
+//   // page2
+//   ret.push({
+//     height: windowHeight,
+//     onScroll(percent: number, dom: Scene1Dom) {
+//     },
+//   });
+//   // page3
+//   ret.push({
+//     height: windowHeight,
+//     onScroll(percent: number, dom: Scene1Dom) {
+//     },
+//   });
+//   return ret;
+// }
 
 /**
  * 앱 진입점
@@ -62,16 +63,16 @@ function generatePageInfos(windowHeight: number): Array<SceneInfo> {
  */
 function App() {
   const scene1Section = useRef<HTMLDivElement>(null);
-  const scene1AppDown = useRef<HTMLDivElement>(null);
 
-  const { height: windowHeight } = useWindowSize();
-  const maxWindowHeight = useRef(0);
+  // const { height: windowHeight } = useWindowSize();
+  // const windowHeight = window.innerHeight;
+  // const maxWindowHeight = useRef(0);
   const prevScrollY = useRef(0);
-  const { y: scrollY } = useWindowScroll();
+  // const { y: scrollY } = useWindowScroll();
   window.scrollDirection = prevScrollY.current < scrollY ? "down" : "up";
   prevScrollY.current = scrollY;
-  const [sceneInfos, setSceneInfos] = useState<Array<SceneInfo>>([]);
-  const [pageHeight, setPageHeight] = useState(0);
+  // const [sceneInfos, setSceneInfos] = useState<Array<SceneInfo>>([]);
+  // const [pageHeight, setPageHeight] = useState(0);
   const [potentialUsers, setPotentialUsers] = useState('0');
   const [totalDownloads, setTotalDownloads] = useState('0');
   const { t } = useTranslation();
@@ -79,7 +80,7 @@ function App() {
 
   // 사전 신청자 수
   useEffect(() => {
-    const numOfPotentialUsers = 1234;
+    const numOfPotentialUsers = 12865;
     setPotentialUsers(numOfPotentialUsers.toString().padStart(5, '0'));
   }, []);
 
@@ -90,65 +91,65 @@ function App() {
   }, []);
 
   // 페이지 정보 초기화
-  useEffect(() => {
-    if (maxWindowHeight.current < windowHeight) {
-      maxWindowHeight.current = windowHeight;
-      setSceneInfos(generatePageInfos(windowHeight));
-    }
-  }, [windowHeight]);
+  // useEffect(() => {
+  //   if (maxWindowHeight.current < windowHeight) {
+  //     maxWindowHeight.current = windowHeight;
+  //     setSceneInfos(generatePageInfos(windowHeight));
+  //   }
+  // }, [windowHeight]);
 
   // 전체 페이지 높이 설정
-  useEffect(() => {
-    setPageHeight(
-      sceneInfos
-        .map((it) => it.height)
-        .reduce(
-          (previousValue, currentValue) => previousValue + currentValue,
-          0
-        )
-    );
-  }, [sceneInfos]);
+  // useEffect(() => {
+  //   setPageHeight(
+  //     sceneInfos
+  //       .map((it) => it.height)
+  //       .reduce(
+  //         (previousValue, currentValue) => previousValue + currentValue,
+  //         0
+  //       )
+  //   );
+  // }, [sceneInfos]);
 
   // 현재 스크롤 위치에 보이는 페이지 정보 계산 및 이벤트 발생.
-  if (sceneInfos.length != 0) {
-    let currentPage = 0;
-    let tempScrollY = scrollY;
-    while (tempScrollY > 0) {
-      tempScrollY -= sceneInfos[currentPage].height;
-      if (tempScrollY >= 0) {
-        currentPage += 1;
-      }
-    }
-
-    const currentPageInfo = sceneInfos[currentPage];
-    let currentPagePercent =
-      tempScrollY == 0
-        ? 0
-        : (tempScrollY + currentPageInfo.height) / currentPageInfo.height;
-    if (scrollY < 0) {
-      currentPagePercent = 0;
-    }
-
-    if (currentPageInfo) {
-      switch (currentPage) {
-        case 0:
-          currentPageInfo.onScroll(currentPagePercent, {
-            appDown: scene1AppDown.current,
-          } as Scene1Dom);
-          break;
-        case 1:
-          currentPageInfo.onScroll(currentPagePercent, {
-          } as Scene2Dom);
-          break;
-        case 2:
-          currentPageInfo.onScroll(currentPagePercent, {
-          } as Scene3Dom);
-          break;
-        default:
-          break;
-      }
-    }
-  }
+  // if (sceneInfos.length != 0) {
+  //   let currentPage = 0;
+  //   let tempScrollY = scrollY;
+  //   while (tempScrollY > 0) {
+  //     tempScrollY -= sceneInfos[currentPage].height;
+  //     if (tempScrollY >= 0) {
+  //       currentPage += 1;
+  //     }
+  //   }
+  //
+  //   const currentPageInfo = sceneInfos[currentPage];
+  //   let currentPagePercent =
+  //     tempScrollY == 0
+  //       ? 0
+  //       : (tempScrollY + currentPageInfo.height) / currentPageInfo.height;
+  //   if (scrollY < 0) {
+  //     currentPagePercent = 0;
+  //   }
+  //
+  //   if (currentPageInfo) {
+  //     switch (currentPage) {
+  //       case 0:
+  //         currentPageInfo.onScroll(currentPagePercent, {
+  //           appDown: scene1AppDown.current,
+  //         } as Scene1Dom);
+  //         break;
+  //       case 1:
+  //         currentPageInfo.onScroll(currentPagePercent, {
+  //         } as Scene2Dom);
+  //         break;
+  //       case 2:
+  //         currentPageInfo.onScroll(currentPagePercent, {
+  //         } as Scene3Dom);
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //   }
+  // }
 
   // type FormValues = {
   //   phone: string;
@@ -195,18 +196,33 @@ function App() {
   return (
     <>
       <Header/>
-      <div className="w-screen" style={{ height: pageHeight }}>
-        <section ref={scene1Section} className="w-screen" style={{ height: sceneInfos[0]?.height }}>
-          <div className="sticky block top-0 h-screen w-screen bg-white">
-            <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full overflow-hidden">
-              <div className={`absolute top-0 w-full h-full`} style={{backgroundImage: `url(${page1bg})`}} />
-              <div className={`absolute w-screen md:w-1/2 md:mt-24 lg:mt-32 left-0 top-1/3 text-center transition-opacity duration-150 ease-in-out`}>
-                <div className="font-bold text-4xl lg:text-7xl md:text-6xl text-white tracking-wide lg:leading-snug" dangerouslySetInnerHTML={{
+      <div className="w-screen h-full">
+        <section ref={scene1Section} className="w-screen h-full">
+          <div className="sticky block top-0 w-screen bg-white" style={{height: innerHeight}}>
+            <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full">
+              <div className={`absolute invisible md:visible top-0 w-full h-full`} style={{backgroundImage: `url(${page1bg})`}}/>
+              <div className={`absolute visible md:invisible top-0 w-full h-full`}>
+                <div className={`absolute w-full h-full bg-black opacity-60`}/>
+                <img className={`absolute left-1/2 -translate-x-1/2 w-[45vh] h-auto -z-10 bottom-0`} src={page1img} alt=""/>
+              </div>
+              <div className={`absolute w-screen md:w-1/2 mt-0 md:mt-24 lg:mt-32 left-0 top-[15%] md:top-1/3 text-center transition-opacity duration-150 ease-in-out`}>
+                <div className="font-bold text-6xl lg:text-7xl md:text-6xl text-white tracking-wide lg:leading-snug scale-x-[85%] md:scale-x-100 tracking-normal" dangerouslySetInnerHTML={{
                   __html: t("home:page1.appDownTitle")
                 }}>
                 </div>
               </div>
-              <div className={`absolute w-screen md:w-1/2 right-0 top-[20%] text-center transition-opacity duration-150 ease-in-out`}>
+              {/*모바일 시작*/}
+              <div className={`absolute visible md:invisible top-[35%] text-white text-4xl font-bold scale-x-[85%]`}>
+                우리 같이 <span className={`text-[#FD0071]`}>연애</span>해
+              </div>
+              <div className={`absolute visible md:invisible bottom-0 bg-white w-[95vw] px-10 py-4`}>
+                <div className={`text-gray-700 scale-x-[85%] origin-left leading-[1rem]`}>사전 신청자 수</div>
+                <div className={`font-bold text-2xl scale-x-[85%] origin-left leading-[1.5rem]`}>&nbsp;{new Intl.NumberFormat().format(Number.parseInt(potentialUsers))}</div>
+              </div>
+              {/*모바일 끝*/}
+
+              {/*가로형 시작*/}
+              <div className={`absolute invisible md:visible  w-screen md:w-1/2 right-0 top-[20%] text-center transition-opacity duration-150 ease-in-out`}>
                 <div className={`text-white text-5xl font-bold mb-8`}>
                   사전 신청자 수
                 </div>
@@ -230,14 +246,17 @@ function App() {
                   <div className={`text-white font-bold text-5xl self-end`}>명</div>
                 </div>
               </div>
-              <button className="absolute bottom-32 rounded-full bg-black font-semibold text-white text-3xl px-24 py-7 mt-7 mr-8 drop-shadow-lg">
+              <svg className="absolute invisible md:visible bottom-16 w-10 -translate-x-1/2 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"/></svg>
+              {/*가로형 끝*/}
+              {/*하단 버튼 시작*/}
+              <button className="absolute bottom-24 md:bottom-32 rounded-full bg-black text-white text-3xl px-20 md:px-24 py-5 md:py-7 mt-7 drop-shadow-lg scale-x-[85%] md:scale-x-100 origin-center">
                 {t("home:page1.appDownload")}
               </button>
-              <svg className="absolute bottom-16 w-10 -translate-x-1/2 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"/></svg>
+              {/*하단 버튼 끝*/}
             </div>
           </div>
         </section>
-        <section className="w-screen" style={{ height: sceneInfos[1]?.height }}>
+        <section className="w-screen" style={{ height: '100vh' }}>
           <div className="sticky top-0 h-screen w-screen bg-red-500">
             <div className="relative w-screen h-screen">
               <div className="absolute top-0 w-screen h-screen background">
