@@ -96,6 +96,14 @@ function App() {
 
   // 휠 이벤트 핸들링
   const handleWheelEvent = (e: WheelEvent) => {
+    let elem = e.target as HTMLElement | null;
+    while (true) {
+      if (elem === null) break;
+      if (elem.classList.contains('ignoreScroll')) return;
+      if (elem.id === 'root') break;
+      elem = elem.parentElement;
+    }
+
     if (Date.now() - lastPageMove.current < 500 ) return;
     lastPageMove.current = Date.now();
 
@@ -112,6 +120,14 @@ function App() {
   }
 
   const handleTouchMoveEvent = (e: TouchEvent) => {
+    let elem = e.target as HTMLElement | null;
+    while (true) {
+      if (elem === null) break;
+      if (elem.classList.contains('ignoreScroll')) return;
+      if (elem.id === 'root') break;
+      elem = elem.parentElement;
+    }
+
     if (Date.now() - lastPageMove.current < 500 ) return;
     const y: number = touchStartXY.current.at(1) as number || 0;
 
