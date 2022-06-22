@@ -13,53 +13,7 @@ import page21 from "./images/2page/1.png";
 import page22 from "./images/2page/2.png";
 import page23 from "./images/2page/3.png";
 import page3bg from "./images/3page/bg.png";
-
-// interface SceneInfo {
-//   height: number;
-//
-//   onScroll(percent: number, dom: SceneDOM): void;
-// }
-
-// type SceneDOM = Scene1Dom | Scene2Dom | Scene3Dom;
-
-// interface Scene1Dom {
-//   appDown: HTMLDivElement | null;
-// }
-//
-// interface Scene2Dom {
-// }
-//
-// interface Scene3Dom {
-// }
-
-/**
- * 화면크기에 맞는 씬을 생성한다
- * @param {number} windowHeight 브라우저 높이
- * @return {Array<SceneInfo>}
- */
-// function generatePageInfos(windowHeight: number): Array<SceneInfo> {
-//   const ret: Array<SceneInfo> = [];
-//
-//   // page1
-//   ret.push({
-//     height: windowHeight,
-//     onScroll(percent: number, dom: Scene1Dom) {
-//     },
-//   });
-//   // page2
-//   ret.push({
-//     height: windowHeight,
-//     onScroll(percent: number, dom: Scene1Dom) {
-//     },
-//   });
-//   // page3
-//   ret.push({
-//     height: windowHeight,
-//     onScroll(percent: number, dom: Scene1Dom) {
-//     },
-//   });
-//   return ret;
-// }
+import page3video from "./images/3page/bg.mp4";
 
 /**
  * 앱 진입점
@@ -400,7 +354,7 @@ function App() {
           <div className="sticky block top-0 w-screen bg-white" style={{height: innerHeight}}>
             <div className="relative w-screen h-full">
               {/* 모바일 시작 */}
-              <div className={`visible lg:invisible w-full h-full pt-24 bg-center`} style={{backgroundImage: `url('${page3bg}')`}}>
+              <div className={`lg:hidden w-full h-full pt-24 bg-center`} style={{backgroundImage: `url('${page3bg}')`}}>
                 <div className={`text-white text-center font-bold text-4xl scale-x-[85%] leading-snug`}>&ldquo;색청&rdquo;<br/>대화의 뉘앙스를<br/>색으로 느껴본 적 있나요?</div>
                 <div className={`absolute top-[40%] left-1/2 -translate-x-1/2 text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 0 ? '!opacity-100': ''}`}>
                   <div className={`text-5xl text-[#FF3534] font-bold scale-x-[85%] mb-12`}>기쁨</div>
@@ -416,7 +370,7 @@ function App() {
                 </div>
                 <div className={`absolute top-[40%] left-1/2 -translate-x-1/2 text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 3 ? '!opacity-100': ''}`}>
                   <div className={`text-5xl text-[#85FE2A] font-bold scale-x-[85%] mb-12`}>슬픔</div>
-                  <div className={`text-4xl text-[#b5ff65] font-bold scale-x-[85%] leading-snug`}>4년 동안 한 번도 <br/>씨운 적 없던 <br/>여친인데..</div>
+                  <div className={`text-4xl text-[#b5ff65] font-bold scale-x-[85%] leading-snug`}>4년 동안 한 번도 <br/>싸운 적 없던 <br/>여친인데..</div>
                 </div>
                 <div className={`absolute top-[40%] left-1/2 -translate-x-1/2 text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 4 ? '!opacity-100': ''}`}>
                   <div className={`text-5xl text-[#FFD200] font-bold scale-x-[85%] mb-12`}>당황</div>
@@ -427,25 +381,34 @@ function App() {
               </div>
               {/* 모바일 끝 */}
               {/* 가로형 시작 */}
-              <div className={`invisible lg:visible`}>
-                <div className={`absolute top-[10%] left-1/2 -translate-x-1/2 font-bold text-6xl text-black`}>사전신청 이벤트</div>
-                <div className={`absolute top-0 left-0 flex flex-row w-full h-full items-center justify-center gap-8`}>
-                  <div className={`text-white text-2xl font-bold bg-black rounded-xl text-center pt-2 pb-4 px-6`}>아이템 66% 할인
-                    <div className={`flex flex-row gap-4 mt-2`}>
-                      <div className={`bg-white p-4 rounded-xl text-black w-56`}>&lt; Social &gt;<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
-                      <div className={`bg-white p-4 rounded-xl text-black w-56`}>&lt; Fnb &gt;<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
-                      <div className={`bg-white p-4 rounded-xl text-black w-56`}>&lt; Metaverse &gt;<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
-                    </div>
-                  </div>
-                  <div className={``}>
-                    <div className={`bg-black rounded-xl text-center w-56 text-white font-bold text-2xl h-full self-stretch`}>배달비 무료 <br/><br/><br/><br/><br/><br/></div>
-                    <div className={`bg-black rounded-xl text-center w-56 text-white font-bold text-2xl h-full self-stretch mt-8`}>전용 휘장 <br/><br/><br/><br/><br/><br/></div>
-                  </div>
+              <div className={`hidden lg:block w-full h-full bg-center`} style={{backgroundImage: `url('${page3bg}')`}}>
+                <video className={`absolute top-0 w-full h-full object-cover`} autoPlay muted loop src={page3video}/>
+                <div className={`absolute top-0 w-full h-full bg-black opacity-60`}/>
+                <div className={`absolute top-[15%] left-1/2 -translate-x-1/2 text-white text-center font-bold text-5xl leading-snug`}>&ldquo;색청&rdquo;<br/>대화의 뉘앙스를 색으로 느껴본 적 있나요?</div>
+                <div className={`absolute flex flex-row justify-center items-center gap-32 top-[45%] text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 0 ? '!opacity-100': ''}`}>
+                  <div className={`text-6xl text-[#FF3534] font-bold`}>기쁨</div>
+                  <div className={`text-4xl text-[#eb4c4c] font-bold leading-snug`}>ㅋㅋㅋㅋ 오늘 진짜 재밌는 일 <br/>있었어요</div>
+                </div>
+                <div className={`absolute flex flex-row justify-center items-center gap-32 top-[45%] text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 1 ? '!opacity-100': ''}`}>
+                  <div className={`text-6xl text-[#366EFF] font-bold`}>분노</div>
+                  <div className={`text-4xl text-[#6590ff] font-bold leading-snug`}>아니 이건 진짜 <br/>너무 불합리한 거 아닌가요?</div>
+                </div>
+                <div className={`absolute flex flex-row justify-center items-center gap-32 top-[45%] text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 2 ? '!opacity-100': ''}`}>
+                  <div className={`text-6xl text-[#FF9102] font-bold`}>불안</div>
+                  <div className={`text-4xl text-[#ffb643] font-bold leading-snug`}>이번에 F뜨면 <br/>장학금 짤리는데..ㅜㅜ</div>
+                </div>
+                <div className={`absolute flex flex-row justify-center items-center gap-32 top-[45%] text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 3 ? '!opacity-100': ''}`}>
+                  <div className={`text-6xl text-[#85FE2A] font-bold`}>슬픔</div>
+                  <div className={`text-4xl text-[#b5ff65] font-bold leading-snug`}>4년 동안 한 번도 <br/>싸운 적 없던 여친인데..</div>
+                </div>
+                <div className={`absolute flex flex-row justify-center items-center gap-32 top-[45%] text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 4 ? '!opacity-100': ''}`}>
+                  <div className={`text-6xl text-[#FFD200] font-bold`}>당황</div>
+                  <div className={`text-4xl text-[#fade61] font-bold leading-snug`}>미팅 나갔는데 <br/>전남친이 앉아있더라고요 <br/>당황...</div>
                 </div>
                 <button className="absolute left-1/2 -translate-x-1/2 bottom-24 md:bottom-32 rounded-full bg-black text-white text-3xl px-20 md:px-24 py-5 md:py-7 mt-7 drop-shadow-lg scale-x-[85%] md:scale-x-100 origin-center">
                   사전신청
                 </button>
-                <svg className="absolute invisible md:visible bottom-16 w-10 left-1/2 -translate-x-1/2 fill-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"/></svg>
+                <svg className="absolute invisible md:visible bottom-16 w-10 left-1/2 -translate-x-1/2 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"/></svg>
               </div>
               {/* 가로형 끝 */}
             </div>
