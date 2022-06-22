@@ -322,7 +322,7 @@ function App() {
                 <img className={`w-24 mt-24 ml-auto`} src={page22} alt=""/>
                 <img className={`w-16 mt-24`} src={page23} alt=""/>
                 <div className={`absolute top-1/4 w-full text-center text-4xl font-bold scale-x-[85%] leading-relaxed`}>배달비 무료<br/>아이템 66% 할인<br/>전용 휘장</div>
-                <button className={`absolute left-1/2 -translate-x-1/2 bottom-24 bg-[#2FB7F8] text-white text-2xl rounded-full px-20 py-5 scale-x-[85%]`}>사전신청</button>
+                <button className={`absolute left-1/2 -translate-x-1/2 bottom-24 bg-[#2FB7F8] text-white text-2xl rounded-full px-20 py-5 scale-x-[85%]`} style={{wordBreak: 'keep-all'}}>사전신청</button>
               </div>
               {/* 모바일 끝 */}
               {/* 가로형 시작 */}
@@ -355,7 +355,9 @@ function App() {
             <div className="relative w-screen h-full">
               {/* 모바일 시작 */}
               <div className={`lg:hidden w-full h-full pt-24 bg-center`} style={{backgroundImage: `url('${page3bg}')`}}>
-                <div className={`text-white text-center font-bold text-4xl scale-x-[85%] leading-snug`}>&ldquo;색청&rdquo;<br/>대화의 뉘앙스를<br/>색으로 느껴본 적 있나요?</div>
+                <video className={`absolute top-0 w-full h-full object-cover`} autoPlay muted loop playsInline preload={'auto'} src={page3video}/>
+                <div className={`absolute top-0 w-full h-full bg-black opacity-60`}/>
+                <div className={`absolute top-[10%] left-1/2 -translate-x-1/2 w-full text-white text-center font-bold text-4xl scale-x-[85%] leading-snug`}>&ldquo;색청&rdquo;<br/>대화의 뉘앙스를<br/>색으로 느껴본 적 있나요?</div>
                 <div className={`absolute top-[40%] left-1/2 -translate-x-1/2 text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 0 ? '!opacity-100': ''}`}>
                   <div className={`text-5xl text-[#FF3534] font-bold scale-x-[85%] mb-12`}>기쁨</div>
                   <div className={`text-4xl text-[#eb4c4c] font-bold scale-x-[85%] leading-snug`}>ㅋㅋㅋㅋ <br/>오늘 진짜 재밌는 일 <br/>있었어요</div>
@@ -376,13 +378,13 @@ function App() {
                   <div className={`text-5xl text-[#FFD200] font-bold scale-x-[85%] mb-12`}>당황</div>
                   <div className={`text-4xl text-[#fade61] font-bold scale-x-[85%] leading-snug`}>미팅 나갔는데 <br/>전남친이 앉아있더라고요 <br/>당황...</div>
                 </div>
-                <button className={`absolute left-1/2 -translate-x-1/2 bottom-24 bg-[#2FB7F8] text-white text-2xl rounded-full px-20 py-5 scale-x-[85%]`}>사전신청</button>
+                <button className={`absolute left-1/2 -translate-x-1/2 bottom-14 bg-[#2FB7F8] text-white text-2xl rounded-full px-20 py-5 scale-x-[85%]`} style={{wordBreak: 'keep-all'}}>사전신청</button>
                 <svg className="absolute invisible md:visible bottom-16 w-10 left-1/2 -translate-x-1/2 fill-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"/></svg>
               </div>
               {/* 모바일 끝 */}
               {/* 가로형 시작 */}
               <div className={`hidden lg:block w-full h-full bg-center`} style={{backgroundImage: `url('${page3bg}')`}}>
-                <video className={`absolute top-0 w-full h-full object-cover`} autoPlay muted loop src={page3video}/>
+                <video className={`absolute top-0 w-full h-full object-cover`} autoPlay muted loop playsInline preload={'auto'} src={page3video}/>
                 <div className={`absolute top-0 w-full h-full bg-black opacity-60`}/>
                 <div className={`absolute top-[15%] left-1/2 -translate-x-1/2 text-white text-center font-bold text-5xl leading-snug`}>&ldquo;색청&rdquo;<br/>대화의 뉘앙스를 색으로 느껴본 적 있나요?</div>
                 <div className={`absolute flex flex-row justify-center items-center gap-32 top-[45%] text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 0 ? '!opacity-100': ''}`}>
