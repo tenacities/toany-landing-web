@@ -9,6 +9,9 @@ import { useTranslation } from "react-i18next";
 // import { useAlert } from "react-alert";
 import page1bg from "./images/1page/bg.png";
 import page1img from "./images/1page/img1.png";
+import page21 from "./images/2page/1.png";
+import page22 from "./images/2page/2.png";
+import page23 from "./images/2page/3.png";
 
 // interface SceneInfo {
 //   height: number;
@@ -79,6 +82,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [potentialUsers, setPotentialUsers] = useState('0');
   const [totalDownloads, setTotalDownloads] = useState('0');
+  const [headerFontColor, setHeaderFontColor] = useState<'white' | 'black'>('white');
   const { t } = useTranslation();
   // const alert = useAlert();
 
@@ -96,6 +100,8 @@ function App() {
 
   // 휠 이벤트 핸들링
   const handleWheelEvent = (e: WheelEvent) => {
+    if (Date.now() - lastPageMove.current < 500 ) return;
+
     let elem = e.target as HTMLElement | null;
     while (true) {
       if (elem === null) break;
@@ -104,9 +110,7 @@ function App() {
       elem = elem.parentElement;
     }
 
-    if (Date.now() - lastPageMove.current < 500 ) return;
     lastPageMove.current = Date.now();
-
     if (e.deltaY > 0) {
       setCurrentPage((prev) => prev + 1);
     } else {
@@ -120,6 +124,8 @@ function App() {
   }
 
   const handleTouchMoveEvent = (e: TouchEvent) => {
+    if (Date.now() - lastPageMove.current < 500 ) return;
+
     let elem = e.target as HTMLElement | null;
     while (true) {
       if (elem === null) break;
@@ -128,7 +134,6 @@ function App() {
       elem = elem.parentElement;
     }
 
-    if (Date.now() - lastPageMove.current < 500 ) return;
     const y: number = touchStartXY.current.at(1) as number || 0;
 
     if (y - e.touches[0].clientY < -50) {
@@ -160,7 +165,15 @@ function App() {
     if (currentPage < 0) {
       setCurrentPage(0);
     }
-    console.log(currentPage);
+  }, [currentPage]);
+
+  // 헤더 색상 변경
+  useEffect(() => {
+    if (currentPage == 1) {
+      setHeaderFontColor('black');
+    } else {
+      setHeaderFontColor('white');
+    }
   }, [currentPage]);
 
   // 페이지 정보 초기화
@@ -268,7 +281,7 @@ function App() {
 
   return (
     <>
-      <Header fontColor={'white'}/>
+      <Header fontColor={headerFontColor}/>
       <div ref={pageWrap} className="w-screen h-full transition-transform ease-in-out duration-500" style={{transform: `translateY(-${currentPage * innerHeight}px)`}}>
         <section ref={scene1Section} className="w-screen h-full">
           <div className="sticky block top-0 w-screen bg-white" style={{height: innerHeight}}>
@@ -330,59 +343,40 @@ function App() {
           </div>
         </section>
         <section className="w-screen h-full">
-          <div className="sticky top-0 h-screen w-screen bg-red-500">
-            <div className="relative w-screen h-screen">
-              <div className="absolute top-0 w-screen h-screen background">
-
-                {/*<img*/}
-                {/*  className="absolute sm:w-auto md:w-1/2 sm:max-w-[50vh] left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000"*/}
-                {/*  ref={scene2Human1}*/}
-                {/*  src={require("./images/2page/human 2.png")}*/}
-                {/*  alt="human"*/}
-                {/*/>*/}
-                {/*<img*/}
-                {/*  className="absolute sm:w-auto md:w-1/2 sm:max-w-[50vh] left-1/2 h-auto top-[20vh] -translate-x-1/2 opacity-0 transition-all duration-1000 lg:-translate-x-full"*/}
-                {/*  ref={scene2Human2}*/}
-                {/*  src={require("./images/3page/human 3.png")}*/}
-                {/*  alt="human2"*/}
-                {/*/>*/}
-                {/*<div*/}
-                {/*  ref={scene2Dim}*/}
-                {/*  className="absolute w-screen h-screen bg-black transition-opacity duration-500 opacity-60 !opacity-0"*/}
-                {/*/>*/}
-                {/*<div*/}
-                {/*  ref={scene2Description}*/}
-                {/*  className="absolute w-fit font-bold text-5xl md:text-6xl !leading-snug text-white top-1/2 left-1/2 lg:left-3/4 -translate-x-1/2 translate-y-1/4 transition-all duration-500 opacity-0"*/}
-                {/*>*/}
-                {/*  <div>{t("home:page2.description1")}</div>*/}
-                {/*  <div>{t("home:page2.description2")}</div>*/}
-                {/*</div>*/}
-                {/*<div*/}
-                {/*  ref={scene2Event}*/}
-                {/*  className="absolute w-fit top-1/2 left-1/2 lg:left-3/4 lg:pr-16 -translate-x-1/2 -translate-y-1/2 duration-500 opacity-0"*/}
-                {/*>*/}
-                {/*  <div className="w-screen lg:w-auto font-bold text-5xl md:text-6xl text-white text-center lg:text-right">*/}
-                {/*    {t("home:page2.eventTitle")}*/}
-                {/*  </div>*/}
-                {/*  <div className="flex flex-col md:flex-row justify-center lg:justify-between items-center mt-8">*/}
-                {/*    <form className="h-12" onSubmit={handleSubmit(onSubmit)}>*/}
-                {/*      <input*/}
-                {/*        className="drop-shadow-xl h-full px-6 box-border w-44 md:mr:12 rounded-tr-none rounded-br-none rounded-tl-md rounded-bl-md"*/}
-                {/*        type="tel"*/}
-                {/*        placeholder="010-0000-0000"*/}
-                {/*        maxLength={13}*/}
-                {/*        {...register("phone")}*/}
-                {/*      />*/}
-                {/*      <button className="font-bold text-white px-6 h-full bg-gradient-to-b from-[#298BFD] to-[#3982FD] drop-shadow-lg rounded-tr-md rounded-br-md">*/}
-                {/*        SIGN UP*/}
-                {/*      </button>*/}
-                {/*    </form>*/}
-                {/*    <button className="font-bold w-fit md:w-auto mt-6 md:mt-0 ml-1.5 bg-white p-3 px-6 text-[#035FF8] drop-shadow-xl">*/}
-                {/*      LEARN MORE*/}
-                {/*    </button>*/}
-                {/*  </div>*/}
-                {/*</div>*/}
+          <div className="sticky block top-0 w-screen bg-white" style={{height: innerHeight}}>
+            <div className="relative w-screen h-full pt-14">
+              {/* 모바일 시작 */}
+              <div className={`visible lg:invisible w-full`}>
+                <div className={`mt-10 text-black text-center font-bold text-5xl scale-x-[85%]`}>사전신청 혜택</div>
+                <img className={`w-32 mt-20`} src={page21} alt=""/>
+                <img className={`w-24 mt-24 ml-auto`} src={page22} alt=""/>
+                <img className={`w-16 mt-24`} src={page23} alt=""/>
+                <div className={`absolute top-1/4 w-full text-center text-4xl font-bold scale-x-[85%] leading-relaxed`}>배달비 무료<br/>아이템 66% 할인<br/>전용 휘장</div>
+                <button className={`absolute left-1/2 -translate-x-1/2 bottom-24 bg-[#2FB7F8] text-white text-2xl rounded-full px-20 py-5 scale-x-[85%]`}>사전신청</button>
               </div>
+              {/* 모바일 끝 */}
+              {/* 가로형 시작 */}
+              <div className={`invisible lg:visible`}>
+                <div className={`absolute top-[10%] left-1/2 -translate-x-1/2 font-bold text-6xl text-black`}>사전신청 이벤트</div>
+                <div className={`absolute top-0 left-0 flex flex-row w-full h-full items-center justify-center gap-8`}>
+                  <div className={`text-white text-2xl font-bold bg-black rounded-xl text-center pt-2 pb-4 px-6`}>아이템 66% 할인
+                    <div className={`flex flex-row gap-4 mt-2`}>
+                      <div className={`bg-white p-4 rounded-xl text-black w-56`}>&lt; Social &gt;<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
+                      <div className={`bg-white p-4 rounded-xl text-black w-56`}>&lt; Fnb &gt;<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
+                      <div className={`bg-white p-4 rounded-xl text-black w-56`}>&lt; Metaverse &gt;<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
+                    </div>
+                  </div>
+                  <div className={``}>
+                    <div className={`bg-black rounded-xl text-center w-56 text-white font-bold text-2xl h-full self-stretch`}>배달비 무료 <br/><br/><br/><br/><br/><br/></div>
+                    <div className={`bg-black rounded-xl text-center w-56 text-white font-bold text-2xl h-full self-stretch mt-8`}>전용 휘장 <br/><br/><br/><br/><br/><br/></div>
+                  </div>
+                </div>
+                <button className="absolute left-1/2 -translate-x-1/2 bottom-24 md:bottom-32 rounded-full bg-black text-white text-3xl px-20 md:px-24 py-5 md:py-7 mt-7 drop-shadow-lg scale-x-[85%] md:scale-x-100 origin-center">
+                  사전신청
+                </button>
+                <svg className="absolute invisible md:visible bottom-16 w-10 left-1/2 -translate-x-1/2 fill-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"/></svg>
+              </div>
+              {/* 가로형 끝 */}
             </div>
           </div>
         </section>
