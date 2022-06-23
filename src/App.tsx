@@ -14,6 +14,7 @@ import page22 from "./images/2page/2.png";
 import page23 from "./images/2page/3.png";
 import page3bg from "./images/3page/bg.png";
 import page3video from "./images/3page/bg.mp4";
+import page4Mbti from "./images/4page/mbti.png";
 
 /**
  * 앱 진입점
@@ -21,7 +22,6 @@ import page3video from "./images/3page/bg.mp4";
  */
 function App() {
   const pageWrap = useRef<HTMLDivElement>(null);
-  const scene1Section = useRef<HTMLDivElement>(null);
 
   // const { height: windowHeight } = useWindowSize();
   // const windowHeight = window.innerHeight;
@@ -125,7 +125,7 @@ function App() {
 
   // 헤더 색상 변경
   useEffect(() => {
-    if (currentPage == 1) {
+    if (currentPage == 1 || currentPage == 3) {
       setHeaderFontColor('black');
     } else {
       setHeaderFontColor('white');
@@ -253,7 +253,7 @@ function App() {
     <>
       <Header fontColor={headerFontColor}/>
       <div ref={pageWrap} className="w-screen h-full transition-transform ease-in-out duration-500" style={{transform: `translateY(-${currentPage * innerHeight}px)`}}>
-        <section ref={scene1Section} className="w-screen h-full">
+        <section className="w-screen h-full">
           <div className="sticky block top-0 w-screen bg-white" style={{height: innerHeight}}>
             <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full">
               <div className={`absolute invisible md:visible top-0 w-full h-full`} style={{backgroundImage: `url(${page1bg})`}}/>
@@ -411,6 +411,64 @@ function App() {
                   사전신청
                 </button>
                 <svg className="absolute invisible md:visible bottom-16 w-10 left-1/2 -translate-x-1/2 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"/></svg>
+              </div>
+              {/* 가로형 끝 */}
+            </div>
+          </div>
+        </section>
+        <section className="w-screen h-full">
+          <div className="sticky block top-0 w-screen bg-white" style={{height: innerHeight}}>
+            <div className="relative w-screen h-full">
+              {/* 모바일 시작 */}
+              <div className={`block lg:hidden w-full pt-14`}>
+                <div className={`mt-5 text-black text-center font-bold text-2xl`}>MBTI는 과학이다</div>
+                <img className={`mt-5 px-8 w-[70%] mx-auto`} src={page4Mbti} alt=""/>
+                <div className={`px-4`}>
+                  <div className={`flex flex-row items-center mt-4`}>
+                    <svg className={`inline-block w-6`} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="#000" d="M17.47 250.9C88.82 328.1 158 397.6 224.5 485.5c72.3-143.8 146.3-288.1 268.4-444.37L460 26.06C356.9 135.4 276.8 238.9 207.2 361.9c-48.4-43.6-126.62-105.3-174.38-137z"/></svg>
+                    <span className={`font-bold text-lg`}>나의 MBTI</span>
+                  </div>
+                  <div className={`text-md`}>내 MBTI를 설정하여 타인에게 소개합니다.</div>
+                  <div className={`flex flex-row items-center mt-4`}>
+                    <svg className={`inline-block w-6`} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="#000" d="M17.47 250.9C88.82 328.1 158 397.6 224.5 485.5c72.3-143.8 146.3-288.1 268.4-444.37L460 26.06C356.9 135.4 276.8 238.9 207.2 361.9c-48.4-43.6-126.62-105.3-174.38-137z"/></svg>
+                    <span className={`font-bold text-lg`}>평균 MBTI</span>
+                  </div>
+                  <div className={`text-md`}>AnyGora에 속해있는 유저들의 평균 MBTI를 출력, 원하는 대화에 쉽게 참여할 수 있습니다.</div>
+                  <div className={`flex flex-row items-center mt-4`}>
+                    <svg className={`inline-block w-6`} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="#000" d="M17.47 250.9C88.82 328.1 158 397.6 224.5 485.5c72.3-143.8 146.3-288.1 268.4-444.37L460 26.06C356.9 135.4 276.8 238.9 207.2 361.9c-48.4-43.6-126.62-105.3-174.38-137z"/></svg>
+                    <span className={`font-bold text-lg`}>남이 보는 내 MBTI</span>
+                  </div>
+                  <div className={`text-md`}>타인이 보는 내 모습은? 다른 사람들이 평가하는 내 MBTI를 알아볼 수 있습니다.</div>
+                </div>
+                <button className={`absolute left-1/2 -translate-x-1/2 bottom-10 bg-[#2FB7F8] text-white text-2xl rounded-full px-20 py-4 scale-x-[85%]`} style={{wordBreak: 'keep-all'}}>사전신청</button>
+              </div>
+              {/* 모바일 끝 */}
+              {/* 가로형 시작 */}
+              <div className={`hidden lg:flex justify-center items-center w-full h-full bg-[#FFF1BA]`}>
+                <div className={`flex flex-row justify-center items-center mx-auto gap-10 mb-12`}>
+                  <div>
+                    <div className={`text-6xl font-bold mb-16`}>MBTI는 과학이다</div>
+                    <img className={`w-[40vw]`} src={page4Mbti} alt=""/>
+                  </div>
+                  <div className={`flex flex-col gap-4`}>
+                    <div className={`bg-white p-2 pr-8 rounded-lg`}>
+                      <div className={`font-bold`}>나의 MBTI</div>
+                      내 MBTI를 설정하여 타인에게 소개 합니다.<br/><br/><br/>
+                    </div>
+                    <div className={`bg-white p-2 pr-8 rounded-lg`}>
+                      <div className={`font-bold`}>평균 MBTI</div>
+                      AnyGora에 속해있는 유저들의 평균 MBTI를<br/>출력, 원하는 대화에 쉽게 참여 할 수 있습니다.<br/><br/>
+                    </div>
+                    <div className={`bg-white p-2 pr-8 rounded-lg`}>
+                      <div className={`font-bold`}>남이 보는 내 MBTI</div>
+                      타인이 보는 내 모습은? 다른 사람들이 평가하는<br/>내 MBTI를 알아볼 수 있습니다.<br/><br/>
+                    </div>
+                  </div>
+                </div>
+                <button className="absolute left-1/2 -translate-x-1/2 bottom-24 md:bottom-18 rounded-full bg-black text-white text-3xl px-20 md:px-16 py-5 md:py-4 mt-7 drop-shadow-lg scale-x-[85%] md:scale-x-100 origin-center">
+                  사전신청
+                </button>
+                <svg className="absolute invisible md:visible bottom-12 w-10 left-1/2 -translate-x-1/2 fill-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"/></svg>
               </div>
               {/* 가로형 끝 */}
             </div>
