@@ -15,6 +15,7 @@ import page23 from "./images/2page/3.png";
 import page3bg from "./images/3page/bg.png";
 import page3video from "./images/3page/bg.mp4";
 import page4Mbti from "./images/4page/mbti.png";
+import page5Character from "./images/5page/character.png";
 
 /**
  * 앱 진입점
@@ -22,6 +23,8 @@ import page4Mbti from "./images/4page/mbti.png";
  */
 function App() {
   const pageWrap = useRef<HTMLDivElement>(null);
+  const page5WrapDesktop = useRef<HTMLDivElement>(null);
+  const page5WrapMobile = useRef<HTMLDivElement>(null);
 
   // const { height: windowHeight } = useWindowSize();
   // const windowHeight = window.innerHeight;
@@ -39,6 +42,7 @@ function App() {
   const [totalDownloads, setTotalDownloads] = useState('0');
   const [headerFontColor, setHeaderFontColor] = useState<'white' | 'black'>('white');
   const [page3Rotation, setPage3Rotation] = useState(0);
+  const [pageScrollY, setPageScrollY] = useState(0);
   const { t } = useTranslation();
   // const alert = useAlert();
 
@@ -120,6 +124,28 @@ function App() {
   useEffect(() => {
     if (currentPage < 0) {
       setCurrentPage(0);
+      return;
+    }
+    if (5 < currentPage) {
+      setCurrentPage(5);
+      return;
+    }
+
+    if (0 <= currentPage && currentPage <= 4)
+      setPageScrollY(currentPage * innerHeight);
+
+  }, [currentPage]);
+
+  // 마지막페이지 좌우 스크롤
+  useEffect(() => {
+    if (currentPage == 4) {
+      page5WrapMobile?.current?.scrollTo({left: 0, behavior: 'smooth'});
+      page5WrapDesktop?.current?.scrollTo({left: 0, behavior: 'smooth'});
+    }
+
+    if (currentPage == 5) {
+      page5WrapMobile?.current?.scrollTo({left: innerWidth, behavior: 'smooth'});
+      page5WrapDesktop?.current?.scrollTo({left: innerWidth, behavior: 'smooth'});
     }
   }, [currentPage]);
 
@@ -252,7 +278,7 @@ function App() {
   return (
     <>
       <Header fontColor={headerFontColor}/>
-      <div ref={pageWrap} className="w-screen h-full transition-transform ease-in-out duration-500" style={{transform: `translateY(-${currentPage * innerHeight}px)`}}>
+      <div ref={pageWrap} className="w-screen h-full transition-transform ease-in-out duration-500" style={{transform: `translateY(-${pageScrollY}px)`}}>
         <section className="w-screen h-full">
           <div className="sticky block top-0 w-screen bg-white" style={{height: innerHeight}}>
             <div className="relative flex items-center justify-center max-w-[100vw] w-screen h-full">
@@ -462,6 +488,55 @@ function App() {
                     <div className={`bg-white p-2 pr-8 rounded-lg`}>
                       <div className={`font-bold`}>남이 보는 내 MBTI</div>
                       타인이 보는 내 모습은? 다른 사람들이 평가하는<br/>내 MBTI를 알아볼 수 있습니다.<br/><br/>
+                    </div>
+                  </div>
+                </div>
+                <button className="absolute left-1/2 -translate-x-1/2 bottom-24 md:bottom-18 rounded-full bg-black text-white text-3xl px-20 md:px-16 py-5 md:py-4 mt-7 drop-shadow-lg scale-x-[85%] md:scale-x-100 origin-center">
+                  사전신청
+                </button>
+                <svg className="absolute invisible md:visible bottom-12 w-10 left-1/2 -translate-x-1/2 fill-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"/></svg>
+              </div>
+              {/* 가로형 끝 */}
+            </div>
+          </div>
+        </section>
+        <section className="w-screen h-full">
+          <div className="sticky block top-0 w-screen bg-white" style={{height: innerHeight}}>
+            <div className="relative w-screen h-full">
+              {/* 모바일 시작 */}
+              <div className={`block lg:hidden w-full pt-14`}>
+                <div ref={page5WrapMobile} className={`flex flex-row w-full overflow-x-hidden`}>
+                  <div className={`flex flex-row justify-center items-center gap-10 mb-12 min-w-[100vw]`}>
+                    <div className={`ml-auto`}>
+                      <div className={`text-6xl font-bold mb-16 text-white`}>선배들과의 밥약<br/>충분히 즐기셨나요?</div>
+                      <div className={`text-6xl font-bold text-white`}>늦었다고 생각하시나요?<br/>막상 직접 만나기엔<br/>부담스럽나요?</div>
+                    </div>
+                    <img className={`w-[35%] ml-auto`} src={page5Character} alt=""/>
+                  </div>
+                  <div className={`flex flex-row justify-center items-center gap-10 mb-12 min-w-[100vw]`}>
+                    <div className={`ml-auto`}>
+                      <div className={`text-6xl font-bold mb-16 text-white`}>선배들과의 밥약<br/>충분히 즐기셨나요?</div>
+                      <div className={`text-6xl font-bold text-white`}>늦었다고 생각하시나요?<br/>막상 직접 만나기엔<br/>부담스럽나요?</div>
+                    </div>
+                    <img className={`w-[35%] ml-auto`} src={page5Character} alt=""/>
+                  </div>
+                </div>
+                <button className={`absolute left-1/2 -translate-x-1/2 bottom-10 bg-[#2FB7F8] text-white text-2xl rounded-full px-20 py-4 scale-x-[85%]`} style={{wordBreak: 'keep-all'}}>사전신청</button>
+              </div>
+              {/* 모바일 끝 */}
+              {/* 가로형 시작 */}
+              <div className={`hidden lg:flex justify-center items-center w-full h-full bg-[#3A3D4C]`}>
+                <div ref={page5WrapDesktop} className={`flex flex-row w-full overflow-x-hidden`}>
+                  <div className={`flex flex-row justify-center items-center gap-10 mb-12 min-w-[100vw]`}>
+                    <div className={`ml-auto`}>
+                      <div className={`text-6xl font-bold mb-16 text-white`}>선배들과의 밥약<br/>충분히 즐기셨나요?</div>
+                      <div className={`text-6xl font-bold text-white`}>늦었다고 생각하시나요?<br/>막상 직접 만나기엔<br/>부담스럽나요?</div>
+                    </div>
+                    <img className={`w-[35%] ml-auto`} src={page5Character} alt=""/>
+                  </div>
+                  <div className={`flex flex-row justify-center items-center gap-10 mb-12 min-w-[100vw]`}>
+                    <div className={``}>
+                      <div className={`text-6xl font-bold mb-16 text-white text-center leading-tight`}>그래서 준비했습니다<br/><br/>ToAny<br/>Is the<br/>Social FnB Metaverse<br/>To Any</div>
                     </div>
                   </div>
                 </div>
