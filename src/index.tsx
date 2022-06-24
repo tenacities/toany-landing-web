@@ -4,8 +4,11 @@ import "./index.css";
 import App from "./App";
 import { Provider as AlertProvider } from "react-alert";
 import reportWebVitals from "./reportWebVitals";
+// import smoothscroll from 'smoothscroll-polyfill';
 import "./i18n";
 import Alert from './components/Alert';
+
+// smoothscroll.polyfill();
 
 ReactDOM.render(
   <AlertProvider template={Alert} containerStyle={{pointerEvents: 'auto'}}>

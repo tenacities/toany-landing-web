@@ -138,14 +138,15 @@ function App() {
 
   // 마지막페이지 좌우 스크롤
   useEffect(() => {
+    console.log(currentPage);
     if (currentPage == 4) {
-      page5WrapMobile?.current?.scrollTo({left: 0, behavior: 'smooth'});
-      page5WrapDesktop?.current?.scrollTo({left: 0, behavior: 'smooth'});
+      page5WrapMobile?.current?.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      page5WrapDesktop?.current?.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     }
 
     if (currentPage == 5) {
-      page5WrapMobile?.current?.scrollTo({left: innerWidth, behavior: 'smooth'});
-      page5WrapDesktop?.current?.scrollTo({left: innerWidth, behavior: 'smooth'});
+      page5WrapMobile?.current?.scrollTo({top: 0, left: innerWidth, behavior: 'smooth'});
+      page5WrapDesktop?.current?.scrollTo({top: 0, left: innerWidth, behavior: 'smooth'});
     }
   }, [currentPage]);
 
@@ -504,24 +505,28 @@ function App() {
           <div className="sticky block top-0 w-screen bg-white" style={{height: innerHeight}}>
             <div className="relative w-screen h-full">
               {/* 모바일 시작 */}
-              <div className={`block lg:hidden w-full pt-14`}>
-                <div ref={page5WrapMobile} className={`flex flex-row w-full overflow-x-hidden`}>
-                  <div className={`flex flex-row justify-center items-center gap-10 mb-12 min-w-[100vw]`}>
-                    <div className={`ml-auto`}>
-                      <div className={`text-6xl font-bold mb-16 text-white`}>선배들과의 밥약<br/>충분히 즐기셨나요?</div>
-                      <div className={`text-6xl font-bold text-white`}>늦었다고 생각하시나요?<br/>막상 직접 만나기엔<br/>부담스럽나요?</div>
+              <div className={`block lg:hidden w-full pt-20`}>
+                <div ref={page5WrapMobile} className={`flex flex-row w-full overflow-x-scroll pointer-events-none`} style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+                  <div className={`min-w-[100vw]`}>
+                    <div className={`ml-5 mr-auto text-black font-bold text-4xl scale-x-[85%] w-fit leading-tight`}>선배들과의 밥약<br/>충분히 즐기셨나요?</div>
+                    <img className={`w-32 mt-14`} src={page21} alt=""/>
+                    <div className={`flex flex-row items-center`}>
+                      <div className={`w-fit text-3xl font-bold scale-x-[85%] leading-tight ml-6 mt-4`}>늦었다고<br/>생각하시나요?<br/>막상 직접 만나기엔<br/>부담스럽나요?</div>
+                      <img className={`w-24 ml-auto`} src={page22} alt=""/>
                     </div>
-                    <img className={`w-[35%] ml-auto`} src={page5Character} alt=""/>
+                    <img className={`w-16 mt-24`} src={page23} alt=""/>
                   </div>
-                  <div className={`flex flex-row justify-center items-center gap-10 mb-12 min-w-[100vw]`}>
-                    <div className={`ml-auto`}>
-                      <div className={`text-6xl font-bold mb-16 text-white`}>선배들과의 밥약<br/>충분히 즐기셨나요?</div>
-                      <div className={`text-6xl font-bold text-white`}>늦었다고 생각하시나요?<br/>막상 직접 만나기엔<br/>부담스럽나요?</div>
+                  <div className={`min-w-[100vw]`}>
+                    <div className={`ml-5 mr-auto text-black font-bold text-4xl scale-x-[85%] w-fit leading-tight`}>그래서 준비했습니다</div>
+                    <img className={`w-32 mt-14`} src={page21} alt=""/>
+                    <div className={`flex flex-row items-center`}>
+                      <div className={`w-fit text-3xl font-bold scale-x-[85%] leading-tight ml-6 mt-4`}>ToAny<br/>Is the<br/>Social FnB Metaverse<br/>To Any</div>
+                      <img className={`w-24 ml-auto`} src={page22} alt=""/>
                     </div>
-                    <img className={`w-[35%] ml-auto`} src={page5Character} alt=""/>
+                    <img className={`w-16 mt-24`} src={page23} alt=""/>
                   </div>
                 </div>
-                <button className={`absolute left-1/2 -translate-x-1/2 bottom-10 bg-[#2FB7F8] text-white text-2xl rounded-full px-20 py-4 scale-x-[85%]`} style={{wordBreak: 'keep-all'}}>사전신청</button>
+                <button className={`absolute left-1/2 -translate-x-1/2 bottom-12 bg-[#2FB7F8] text-white text-2xl rounded-full px-20 py-5 scale-x-[85%]`} style={{wordBreak: 'keep-all'}}>사전신청</button>
               </div>
               {/* 모바일 끝 */}
               {/* 가로형 시작 */}
