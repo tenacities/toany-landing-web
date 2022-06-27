@@ -288,13 +288,13 @@ function App() {
                 <div className={`absolute w-full h-full bg-black opacity-60`}/>
                 <img className={`absolute left-1/2 -translate-x-1/2 w-[45vh] h-auto -z-10 bottom-0`} src={page1img} alt=""/>
               </div>
-              <div className={`absolute w-screen md:w-1/2 mt-0 md:mt-24 lg:mt-32 left-0 top-[15%] md:top-1/3 text-center transition-opacity duration-150 ease-in-out`}>
-                <div className="font-bold text-6xl lg:text-7xl md:text-6xl text-white tracking-wide lg:leading-snug scale-x-[85%] md:scale-x-100 tracking-normal" dangerouslySetInnerHTML={{
+              {/*모바일 시작*/}
+              <div className={`absolute lg:hidden w-screen md:w-1/2 mt-0 md:mt-24 lg:mt-32 left-0 top-[15%] md:top-1/3 text-center transition-opacity duration-150 ease-in-out`}>
+                <div className="font-bold text-5xl lg:text-7xl md:text-6xl text-white tracking-wide lg:leading-snug scale-x-[85%] md:scale-x-100 tracking-normal" style={{fontFamily:"Cafe24 Ohsquare"}} dangerouslySetInnerHTML={{
                   __html: t("home:page1.appDownTitle")
                 }}>
                 </div>
               </div>
-              {/*모바일 시작*/}
               <div className={`absolute visible md:invisible top-[35%] text-white text-4xl font-bold scale-x-[85%]`}>
                 우리 같이 <span className={`text-[#FD0071]`}>연애</span>해
               </div>
@@ -305,6 +305,12 @@ function App() {
               {/*모바일 끝*/}
 
               {/*가로형 시작*/}
+              <div className={`hidden lg:absolute w-screen md:w-1/2 mt-0 md:mt-24 lg:mt-32 left-0 top-[15%] md:top-1/3 text-center transition-opacity duration-150 ease-in-out`}>
+                <div className="font-bold text-6xl lg:text-7xl md:text-6xl text-white tracking-wide lg:leading-snug scale-x-[85%] md:scale-x-100 tracking-normal" dangerouslySetInnerHTML={{
+                  __html: t("home:page1.appDownTitle")
+                }}>
+                </div>
+              </div>
               <div className={`absolute invisible md:visible w-screen md:w-1/2 right-0 top-[20%] text-center transition-opacity duration-150 ease-in-out`}>
                 <div className={`text-white text-5xl font-bold mb-8`}>
                   사전 신청자 수

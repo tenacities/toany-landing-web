@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: "Cafe24 Ohsquare";
+    src: url("./fonts/Cafe24Ohsquare.ttf") format("truetype");
+}
+
 body {
     background-color: #475ed7;
     margin: 0;
