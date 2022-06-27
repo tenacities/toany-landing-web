@@ -419,7 +419,7 @@ function App() {
               <div className={`hidden lg:block w-full h-full bg-center`} style={{backgroundImage: `url('${page3bg}')`}}>
                 <video className={`absolute top-0 w-full h-full object-cover`} autoPlay muted loop playsInline preload={'auto'} src={page3video}/>
                 <div className={`absolute top-0 w-full h-full bg-black opacity-60`}/>
-                <div className={`absolute top-[15%] left-1/2 -translate-x-1/2 text-white text-center font-bold text-5xl leading-snug`}>&ldquo;색청&rdquo;<br/>대화의 뉘앙스를 색으로 느껴본 적 있나요?</div>
+                <div className={`absolute top-[15%] w-full left-1/2 -translate-x-1/2 text-white text-center font-bold text-5xl leading-snug`}>&ldquo;색청&rdquo;<br/>대화의 뉘앙스를 색으로 느껴본 적 있나요?</div>
                 <div className={`absolute flex flex-row justify-center items-center gap-32 top-[45%] text-center w-full opacity-0 ease-in-out duration-1000 ${page3Rotation == 0 ? '!opacity-100': ''}`}>
                   <div className={`text-6xl text-[#FF3534] font-bold`}>기쁨</div>
                   <div className={`text-4xl text-[#eb4c4c] font-bold leading-snug`}>ㅋㅋㅋㅋ 오늘 진짜 재밌는 일 <br/>있었어요</div>
