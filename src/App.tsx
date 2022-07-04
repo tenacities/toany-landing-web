@@ -12,6 +12,8 @@ import page1img from "./images/1page/img1.png";
 import page21 from "./images/2page/1.png";
 import page22 from "./images/2page/2.png";
 import page23 from "./images/2page/3.png";
+import page2social from "./images/2page/social.png";
+import page2fnb from "./images/2page/fnb.jpg";
 import page3bg from "./images/3page/bg.png";
 import page3video from "./images/3page/bg.mp4";
 import page4Mbti from "./images/4page/mbti.png";
@@ -364,8 +366,16 @@ function App() {
                 <div className={`absolute top-0 left-0 flex flex-row w-full h-full items-center justify-center gap-8`}>
                   <div className={`text-white text-2xl font-bold bg-black rounded-xl text-center pt-2 pb-4 px-6`}>아이템 66% 할인
                     <div className={`flex flex-row gap-4 mt-2`}>
-                      <div className={`bg-white p-4 rounded-xl text-black w-56`}>&lt; Social &gt;<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
-                      <div className={`bg-white p-4 rounded-xl text-black w-56`}>&lt; Fnb &gt;<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
+                      <div className={`relative bg-white p-4 rounded-xl text-black w-56`}>
+                        <img className={`absolute top-0 left-0 w-full h-full opacity-60`} src={page2social} alt=""/>
+                        <span className={`absolute left-0 w-full`}>&lt; Social &gt;</span>
+                        <span className={`absolute top-1/2 -translate-y-1/2 left-0 w-full`}>운명의 상대에게는 DM을 보내보자</span>
+                      </div>
+                      <div className={`relative bg-white p-4 rounded-xl text-black w-56`}>
+                        <img className={`absolute top-0 left-0 w-full h-full opacity-60`} src={page2fnb} alt=""/>
+                        <span className={`absolute left-0 w-full`}>&lt; Fnb &gt;</span>
+                        <span className={`absolute top-1/2 -translate-y-1/2 left-0 w-full`}>우리끼리만 식사 하고 싶을 땐 Private table을 펼쳐보자</span>
+                      </div>
                       <div className={`bg-white p-4 rounded-xl text-black w-56`}>&lt; Metaverse &gt;<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></div>
                     </div>
                   </div>
