@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  landing-web:
+    image: dev.docker.toany.app/toany-landing-web:latest
+    deploy:
+      placement:
+        constraints: [ node.hostname == common ]
+    ports:
+      - target: 2002
+        published: 21100
+        protocol: tcp
+        mode: host
+    volumes:
+      #  - /var/service/log:/usr/var/log
+      - /etc/localtime:/etc/localtime
+    container_name: toany-landing-web
