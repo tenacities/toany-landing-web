@@ -46,6 +46,8 @@ function App() {
   const [page3Rotation, setPage3Rotation] = useState(0);
   const [pageScrollY, setPageScrollY] = useState(0);
   const { t } = useTranslation();
+  const [footerHeight, setFooterHeight] = useState(200);
+  const [footerPanel, setFooterPanel] = useState(0); // 0: noting open, 1: korean info open, 2: eng info open
   // const alert = useAlert();
 
   // 사전 신청자 수
@@ -128,15 +130,21 @@ function App() {
       setCurrentPage(0);
       return;
     }
-    if (5 < currentPage) {
-      setCurrentPage(5);
+    if (6 < currentPage) {
+      setCurrentPage(6);
       return;
     }
+
+    if (currentPage == 5)
+      setPageScrollY(4 * innerHeight);
+
+    if (currentPage == 6)
+      setPageScrollY(4 * innerHeight + footerHeight);
 
     if (0 <= currentPage && currentPage <= 4)
       setPageScrollY(currentPage * innerHeight);
 
-  }, [currentPage]);
+  }, [currentPage, footerHeight]);
 
   // 마지막페이지 좌우 스크롤
   useEffect(() => {
@@ -174,6 +182,13 @@ function App() {
       }
     }
   }, [currentPage]);
+
+  useEffect(() => {
+    if (footerPanel == 0)
+      setFooterHeight(200);
+    else
+      setFooterHeight(400);
+  }, [footerPanel]);
 
   // 페이지 정보 초기화
   // useEffect(() => {
@@ -570,75 +585,80 @@ function App() {
             </div>
           </div>
         </section>
-        {/*<section className="w-screen" style={{ height: sceneInfos[2]?.height }}>*/}
-        {/*  <div className="relative w-screen h-screen">*/}
-        {/*    <div className="absolute w-screen h-[200vh] top-0">*/}
-        {/*      <div className="relative w-screen h-full">*/}
-        {/*        <div className="youtube-video-container">*/}
-        {/*          <iframe*/}
-        {/*            className="youtube-video"*/}
-        {/*            src="https://www.youtube.com/embed/wDU6Y1PNAt8?autoplay=1&mute=1&loop=1&controls=0&rel=0&iv_load_policy=3"*/}
-        {/*            title="YouTube video player"*/}
-        {/*            frameBorder="0"*/}
-        {/*            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
-        {/*            allowFullScreen*/}
-        {/*          />*/}
-        {/*        </div>*/}
-        {/*        <div className="absolute top-0 left-0 flex flex-col justify-center items-center w-screen h-full">*/}
-        {/*          <div style={{ height: (sceneInfos[2]?.height || 0) / 2 }} />*/}
-        {/*          <div ref={scene3Dim} className="absolute top-0 left-0 w-screen h-full bg-black transition-opacity duration-500 opacity-60 !opacity-0" />*/}
-        {/*          <div className="flex flex-col items-center justify-center min-w-[30vw] p-3 bg-black z-10">*/}
-        {/*            <input*/}
-        {/*              className="w-full p-3"*/}
-        {/*              type="text"*/}
-        {/*              placeholder={t("home:page3.inputIdPlaceholder")}*/}
-        {/*            />*/}
-        {/*            <input*/}
-        {/*              className="w-full p-3 mt-4"*/}
-        {/*              type="password"*/}
-        {/*              placeholder={t("home:page3.inputPasswordPlaceholder")}*/}
-        {/*            />*/}
-        {/*            <div className="mt-3 ml-auto">*/}
-        {/*              <button className="mr-4 text-white">*/}
-        {/*                {t("home:page3.signup")}*/}
-        {/*              </button>*/}
-        {/*              <button className="text-white">*/}
-        {/*                {t("home:page3.findPassword")}*/}
-        {/*              </button>*/}
-        {/*            </div>*/}
-        {/*            <button className="w-full text-white text-center mt-3 p-3 bg-[#1E2F59]">*/}
-        {/*              {t("home:page3.signIn")}*/}
-        {/*            </button>*/}
-        {/*            <hr className="w-full my-6 border-gray-500" />*/}
-        {/*            <div className="text-white">*/}
-        {/*              {t("home:page3.snsSignInDescription")}*/}
-        {/*            </div>*/}
-        {/*            <div className="flex justify-evenly w-full my-6">*/}
-        {/*              <button className="max-w-[18%] rounded-full overflow-hidden">*/}
-        {/*                <img*/}
-        {/*                  src={require("./images/3page/sns_kakao.png")}*/}
-        {/*                  alt="kakao login"*/}
-        {/*                />*/}
-        {/*              </button>*/}
-        {/*              <button className="max-w-[18%] rounded-full overflow-hidden">*/}
-        {/*                <img*/}
-        {/*                  src={require("./images/3page/sns_google.png")}*/}
-        {/*                  alt="google login"*/}
-        {/*                />*/}
-        {/*              </button>*/}
-        {/*              <button className="max-w-[18%] rounded-full overflow-hidden">*/}
-        {/*                <img*/}
-        {/*                  src={require("./images/3page/sns_apple.png")}*/}
-        {/*                  alt="apple login"*/}
-        {/*                />*/}
-        {/*              </button>*/}
-        {/*            </div>*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</section>*/}
+        <section>
+          <div className="sticky block top-0 w-screen bg-white" style={{height: footerHeight}}>
+            <div className="flex lg:hidden relative w-screen h-full">
+              <div className={`justify-center items-start w-full h-full bg-white p-4`}>
+                <div className="flex flex-col w-full justify-start items-start">
+                  <div className="flex flex-row w-full">
+                    <div>
+                      <img className="h-12" src={require('./images/tenacities.png')}/>
+                      <img className="h-12 mt-4" src={require('./images/logo.png')}/>
+                    </div>
+                    <div className="ml-6 text-gray-500">
+                      <div className="font-bold">(주)테너시티즈</div>
+                      <div className="font-bold">TenaCities Co., Ltd</div>
+                      <div className="text-sm mt-4">Social FnB Metaverse ToAny</div>
+                      <div className="text-sm">Served By Tenacities</div>
+                    </div>
+                  </div>
+                  <div className="mt-4" onClick={() => footerPanel === 1 ? setFooterPanel(0) : setFooterPanel(1)}>(주)테너시티즈 사업자정보 <svg className={`${footerPanel === 1 ? 'rotate-180' : ''} inline w-5 ml-2 transition-all`} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg></div>
+                  <div className={`${footerPanel === 1 ? 'h-32 mt-4' : 'h-0'} ml-4 text-gray-500 text-sm overflow-hidden transition-all duration-300`}>
+                    <div>(주)테너시티즈 | 대표자명 : 마진형</div>
+                    <div>서울 구로구 디지털로 34길 55 코오롱싸이언스밸리 2차</div>
+                    <div>B101 웍앤코. E16</div>
+                    <div>사업자번호 : 516-88-02307</div>
+                    <div>고객센터, 제휴문의, 이메일 문의 :</div>
+                    <div>toany.official@toany.app</div>
+                  </div>
+                  <div className="" onClick={() => footerPanel === 2 ? setFooterPanel(0) : setFooterPanel(2)}>TenaCities Co., Ltd Business info <svg className={`${footerPanel === 2 ? 'rotate-180' : ''} inline w-5 ml-2`} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg></div>
+                  <div className={`${footerPanel === 2 ? 'h-32' : 'h-0'} ml-4 mt-4 text-gray-500 text-sm overflow-hidden transition-all duration-300`}>
+                    <div>TenaCities Co., Ltd | CEO : Jhonny Cloche Ma</div>
+                    <div>E-16, B101, 55, Digital-ro 34-gil, Guro-gu, Seoul,</div>
+                    <div>Republic of Korea</div>
+                    <div>Business registration No. : 516-88-02307</div>
+                    <div>mail: toany.official@toany.app</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/*  가로형 시작 */}
+            <div className="hidden lg:flex relative w-screen h-full">
+              <div className={`justify-center items-start w-full h-full bg-white p-4`}>
+                <div className="flex flex-row w-full justify-start items-start">
+                  <div>
+                    <img src={require('./images/tenacities.png')}/>
+                    <img src={require('./images/logo.png')} className="mt-4"/>
+                  </div>
+                  <div>
+                    <div className="ml-6 text-gray-500 text-sm">
+                      <div className="text-md font-bold mt-4">(주)테너시티즈</div>
+                      <div className="text-md font-bold">TenaCities Co., Ltd</div>
+                      <div className="mt-8">Social FnB Metaverse ToAny</div>
+                      <div>Served By Tenacities</div>
+                    </div>
+                  </div>
+                  <div className="ml-4 text-gray-500 text-sm">
+                    <div>(주)테너시티즈 | 대표자명 : 마진형</div>
+                    <div>서울 구로구 디지털로 34길 55 코오롱싸이언스밸리 2차</div>
+                    <div>B101 웍앤코. E16</div>
+                    <div>사업자번호 : 516-88-02307</div>
+                    <div>고객센터, 제휴문의, 이메일 문의 :</div>
+                    <div>toany.official@toany.app</div>
+                  </div>
+                  <div className="ml-4 text-gray-500 text-sm">
+                    <div>TenaCities Co., Ltd | CEO : Jhonny Cloche Ma</div>
+                    <div>E-16, B101, 55, Digital-ro 34-gil, Guro-gu, Seoul,</div>
+                    <div>Republic of Korea</div>
+                    <div>Business registration No. : 516-88-02307</div>
+                    <div>mail: toany.official@toany.app</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/*  가로형 끝 */}
+          </div>
+        </section>
       </div>
     </>
   );
