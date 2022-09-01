@@ -18,6 +18,7 @@ import page3bg from "./images/3page/bg.png";
 import page3video from "./images/3page/bg.mp4";
 import page4Mbti from "./images/4page/mbti.png";
 import page5Character from "./images/5page/character.png";
+import { Link } from 'react-router-dom';
 
 /**
  * 앱 진입점
@@ -598,7 +599,8 @@ function App() {
                     <div className="ml-6 text-gray-500">
                       <div className="font-bold">(주)테너시티즈</div>
                       <div className="font-bold">TenaCities Co., Ltd</div>
-                      <div className="text-sm mt-4">Social FnB Metaverse ToAny</div>
+                      <Link className="font-bold text-sm text-gray-800" to={'/policy/privacy'}>개인정보처리방침</Link>
+                      <div className="text-sm mt-1">Social FnB Metaverse ToAny</div>
                       <div className="text-sm">Served By Tenacities</div>
                     </div>
                   </div>
@@ -632,8 +634,9 @@ function App() {
                   </div>
                   <div>
                     <div className="ml-6 text-gray-500 text-sm">
-                      <div className="text-md font-bold mt-4">(주)테너시티즈</div>
+                      <div className="text-md font-bold mt-2">(주)테너시티즈</div>
                       <div className="text-md font-bold">TenaCities Co., Ltd</div>
+                      <Link className="font-bold text-gray-800" to={'/policy/privacy'}>개인정보처리방침</Link>
                       <div className="mt-8">Social FnB Metaverse ToAny</div>
                       <div>Served By Tenacities</div>
                     </div>
