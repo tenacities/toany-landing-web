@@ -18,6 +18,7 @@ import page3bg from "./images/3page/bg.png";
 import page3video from "./images/3page/bg.mp4";
 import page4Mbti from "./images/4page/mbti.png";
 import page5Character from "./images/5page/character.png";
+import TextSpinner from './components/TextSpinner';
 
 /**
  * 앱 진입점
@@ -297,8 +298,15 @@ function App() {
                 }}>
                 </div>
               </div>
-              <div className={`absolute visible md:invisible top-[35%] text-white text-4xl font-bold scale-x-[85%]`}>
-                우리 같이 <span className={`text-[#FD0071]`}>연애</span>해
+              <div className={`absolute visible md:invisible flex top-[35%] text-white text-4xl font-bold scale-x-[85%]`}>
+                우리 같이 &nbsp;<TextSpinner textsWithColor={[
+                {text: '연애', color: '#FD0071'},
+                {text: '얘기', color: '#FFBBCC'},
+                {text: '사과', color: '#BBCCFF'},
+                {text: '애플', color: '#FFCCAA'},
+                {text: '망고', color: '#AABBCC'},
+                {text: '쥬스', color: '#FF00CC'},
+              ]} />해
               </div>
               <div className={`absolute visible md:invisible bottom-0 bg-white w-[95vw] px-10 py-4`}>
                 <div className={`text-gray-700 scale-x-[85%] origin-left leading-[1rem]`}>사전 신청자 수</div>
