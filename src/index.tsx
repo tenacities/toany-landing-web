@@ -7,14 +7,19 @@ import reportWebVitals from "./reportWebVitals";
 // import smoothscroll from 'smoothscroll-polyfill';
 import "./i18n";
 import Alert from './components/Alert';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Privacy from './pages/privacy';
 
 // smoothscroll.polyfill();
 
 ReactDOM.render(
   <AlertProvider template={Alert} containerStyle={{pointerEvents: 'auto'}}>
-    <App />,{/*// <React.StrictMode>*/}
-    {/*//   <App />*/}
-    {/*// </React.StrictMode>*/}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}/>
+        <Route path="/policy/privacy" element={<Privacy/>}/>
+      </Routes>
+    </BrowserRouter>
   </AlertProvider>,
   document.getElementById("root")
 );
