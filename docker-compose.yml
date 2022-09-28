@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   landing-web:
-    image: dev.docker.toany.app/toany-landing-web:latest
+    image: ${registry}:latest
     deploy:
       placement:
         constraints: [ node.hostname == common ]
