@@ -9,6 +9,7 @@ import "./i18n";
 import Alert from './components/Alert';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Privacy from './pages/privacy';
+import TOS from './pages/tos';
 
 // smoothscroll.polyfill();
 
@@ -18,6 +19,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />}/>
         <Route path="/policy/privacy" element={<Privacy/>}/>
+        <Route path="/policy/tos" element={<TOS/>}/>
       </Routes>
     </BrowserRouter>
   </AlertProvider>,
