@@ -2,9 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/*@font-face {*/
+/*    font-family: "Cafe24 Ohsquare";*/
+/*    src: url("./fonts/Cafe24Ohsquare.ttf") format("truetype");*/
+/*}*/
+
 @font-face {
-    font-family: "Cafe24 Ohsquare";
-    src: url("./fonts/Cafe24Ohsquare.ttf") format("truetype");
+   font-family: 'GangwonEduHyeonokT';
+    src: url("https://cdn.jsdelivr.net/gh/wooin21/web/fonts/GWedu/GangwonEduHyeonokT.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GangwonEduPowerExtraBoldA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 body {
@@ -13,12 +34,12 @@ body {
     font-family: "Noto Sans KR", sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
+    /*overflow: hidden;*/
     scroll-behavior: smooth;
 }
 
 #root {
-    position: fixed;
+    /*position: fixed;*/
 }
 
 code {
