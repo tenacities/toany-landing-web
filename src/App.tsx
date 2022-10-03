@@ -2,6 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from 'react-router-dom';
 import EventImg from './images/event.png';
 import Bg from './images/bg.png';
+import Ad1 from './images/1.jpg';
+import Ad2 from './images/2.jpg';
+import Ad3 from './images/3.jpg';
+import Ad4 from './images/4.jpg';
+import Ad5 from './images/5.jpg';
+import Ad6 from './images/6.jpg';
+import Ad7 from './images/7.jpg';
+import Ad8 from './images/ad2.png';
+import Ad8Mobile from './images/ad8_mobile.jpg';
 /**
  * 앱 진입점
  * @constructor
@@ -281,7 +290,7 @@ function App() {
       <div ref={pageWrap} className="w-screen transition-transform ease-in-out duration-500">
         <section className="w-screen h-full">
           <div className="sticky block top-0 w-screen bg-white">
-            <div className="relative w-screen lg:h-full">
+            <div className="relative w-screen lg:h-screen">
               {/* 가로형 시작 */}
               <div className={`flex flex-col justify-center items-center w-full lg:h-full bg-center bg-cover`} style={{backgroundImage: `url(${Bg})`}}>
                 <div className={`relative flex flex-col pt-16 justify-center items-center w-full max-w-full h-full bg-black bg-opacity-60`}>
@@ -315,6 +324,16 @@ function App() {
                 </div>
               </div>
               {/* 가로형 끝 */}
+            </div>
+            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-2 p-2`}>
+            <img className={``} src={Ad1} alt=""/>
+            <img className={``} src={Ad2} alt=""/>
+            <img className={``} src={Ad3} alt=""/>
+            <img className={``} src={Ad4} alt=""/>
+            <img className={``} src={Ad5} alt=""/>
+            <img className={``} src={Ad6} alt=""/>
+            <img className={``} src={Ad7} alt=""/>
+              {window.innerWidth >= 1024 ? <img className={``} src={Ad8} alt=""/> : <img className={``} src={Ad8Mobile} alt=""/>}
             </div>
           </div>
         </section>
