@@ -325,7 +325,7 @@ function App() {
               </div>
               {/* 가로형 끝 */}
             </div>
-            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-2 p-2`}>
+            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-2 p-2 justify-items-center`}>
             <img className={``} src={Ad1} alt=""/>
             <img className={``} src={Ad2} alt=""/>
             <img className={``} src={Ad3} alt=""/>
