@@ -301,13 +301,13 @@ function App() {
                   <div className={`mb-8 p-2 lg:p-6 grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-6 lg:w-[885px] bg-white bg-opacity-50 lg:text-center`}>
                     <div className={`flex flex-row lg:flex-col bg-white items-center p-4 rounded-xl shadow-lg`}>
                       <div className={`font-GangwonEduHyeonokT text-2xl lg:text-4xl rounded-full bg-[#F5B4D0] flex justify-center items-center shrink-0 w-6 h-6 lg:w-10 lg:h-10 text-white mr-4 lg:mr-0 lg:mb-2`}>01</div>
-                      <div className={`font-GangwonEduPowerExtraBoldA text-xl lg:text-3xl mr-4 lg:mr-0 lg:mb-2 basis-[96px] lg:basis-0 shrink-0`}>메타버스 단체 소개팅</div>
-                      <div className={`font-Pretendard-Regular`} style={{wordBreak: 'keep-all'}}>ToAny World에서 단체 소개팅을 진행합니다.</div>
+                      <div className={`font-GangwonEduPowerExtraBoldA text-xl lg:text-3xl mr-4 lg:mr-0 lg:mb-2 basis-[96px] lg:basis-0 shrink-0`} style={{wordBreak: 'keep-all'}}>우리집 포트럭파티</div>
+                      <div className={`font-Pretendard-Regular`} style={{wordBreak: 'keep-all'}}>ToAny World에서 포트럭 파티를 진행합니다.</div>
                     </div>
                     <div className={`flex flex-row lg:flex-col bg-white items-center p-4 rounded-xl shadow-lg`}>
                       <div className={`font-GangwonEduHyeonokT text-2xl lg:text-4xl rounded-full bg-[#DFB8D5] flex justify-center items-center shrink-0 w-6 h-6 lg:w-10 lg:h-10 text-white mr-4 lg:mr-0 lg:mb-2`}>02</div>
                       <div className={`font-GangwonEduPowerExtraBoldA text-xl lg:text-3xl mr-4 lg:mr-0 lg:mb-2 basis-[96px] lg:basis-0 shrink-0`}>일시</div>
-                      <div className={`font-Pretendard-Regular`} style={{wordBreak: 'keep-all'}}>10/7 금요일, 18:00~18:40 <br/> (이후에도 자주 진행예정입니다.)</div>
+                      <div className={`font-Pretendard-Regular`} style={{wordBreak: 'keep-all'}}>10/23 일요일, 20:00~<br/>(종료시점 자유)</div>
                     </div>
                     <div className={`flex flex-row lg:flex-col bg-white items-center p-4 rounded-xl shadow-lg`}>
                       <div className={`font-GangwonEduHyeonokT text-2xl lg:text-4xl rounded-full bg-[#68CEF1] flex justify-center items-center shrink-0 w-6 h-6 lg:w-10 lg:h-10 text-white mr-4 lg:mr-0 lg:mb-2`}>03</div>
@@ -317,10 +317,13 @@ function App() {
                     <div className={`flex flex-row lg:flex-col bg-white items-center p-4 rounded-xl shadow-lg`}>
                       <div className={`font-GangwonEduHyeonokT text-2xl lg:text-4xl rounded-full bg-[#1D4E79] flex justify-center items-center shrink-0 w-6 h-6 lg:w-10 lg:h-10 text-white mr-4 lg:mr-0 lg:mb-2`}>04</div>
                       <div className={`font-GangwonEduPowerExtraBoldA text-xl lg:text-3xl mr-4 lg:mr-0 lg:mb-2 basis-[96px] lg:basis-0 shrink-0`}>보상</div>
-                      <div className={`font-Pretendard-Regular`} style={{wordBreak: 'keep-all'}}>만남이 성사된 커플에게는 맥주 한잔 씩을, 인증사진을 찍어서 보내주시는 분들께는 안주까지 지급해드립니다-!</div>
+                      <div className={`font-Pretendard-Regular`} style={{wordBreak: 'keep-all'}}>배달 받을 때 까지 대화 하시면 배달비를, 식사 할 때 까지 대화 나누시면 치킨 기프티콘을 지급해드립니다.</div>
                     </div>
                   </div>
-                  <a className={`mb-16 text-4xl bg-[#1E4E79] border-4 rounded-full px-16 py-4 text-white font-GangwonEduPowerExtraBoldA cursor-pointer blank`} href={`https://forms.gle/7M2cQNzu9vC1cHdHA`} target='_blank' rel='noreferrer'>사전신청</a>
+                  <div className={`flex flex-row w-full mb-16 justify-around lg:justify-center lg:gap-10`}>
+                    <a className={`text-4xl bg-[#1E4E79] border-4 rounded-full px-6 lg:px-16 py-4 text-white font-GangwonEduPowerExtraBoldA cursor-pointer blank`} href={`https://forms.gle/7M2cQNzu9vC1cHdHA`} target='_blank' rel='noreferrer'>사전신청</a>
+                    <a className={`text-4xl bg-white border-4 border-[#1E4E79] rounded-full px-6 lg:px-16 py-4 text-[#1E4E79] font-GangwonEduPowerExtraBoldA cursor-pointer blank`} href={`https://www.instagram.com/toany.official/`} target='_blank' rel='noreferrer'>후기모음</a>
+                  </div>
                 </div>
               </div>
               {/* 가로형 끝 */}
