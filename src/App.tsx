@@ -321,7 +321,7 @@ function App() {
                     </div>
                   </div>
                   <div className={`flex flex-row w-full mb-16 justify-around lg:justify-center lg:gap-10`}>
-                    <a className={`text-4xl bg-[#1E4E79] border-4 rounded-full px-6 lg:px-16 py-4 text-white font-GangwonEduPowerExtraBoldA cursor-pointer blank`} href={`https://forms.gle/7M2cQNzu9vC1cHdHA`} target='_blank' rel='noreferrer'>사전신청</a>
+                    <a className={`text-4xl bg-[#1E4E79] border-4 rounded-full px-6 lg:px-16 py-4 text-white font-GangwonEduPowerExtraBoldA cursor-pointer blank`} href={`https://forms.gle/bd7qCnYSBALtjYcK9`} target='_blank' rel='noreferrer'>사전신청</a>
                     <a className={`text-4xl bg-white border-4 border-[#1E4E79] rounded-full px-6 lg:px-16 py-4 text-[#1E4E79] font-GangwonEduPowerExtraBoldA cursor-pointer blank`} href={`https://www.instagram.com/toany.official/`} target='_blank' rel='noreferrer'>후기모음</a>
                   </div>
                 </div>
