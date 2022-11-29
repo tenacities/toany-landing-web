@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ed6c6edd.css",
+    "main.js": "/static/js/main.aa7f0c37.js",
+    "static/js/787.aafd603c.chunk.js": "/static/js/787.aafd603c.chunk.js",
+    "static/media/bg.png": "/static/media/bg.d7e00f111f577665ac94.png",
+    "static/media/ad8_mobile.jpg": "/static/media/ad8_mobile.e6f59ec2f75790e2d618.jpg",
+    "static/media/2.jpg": "/static/media/2.ed25192188990e7f63ab.jpg",
+    "static/media/ad2.png": "/static/media/ad2.6d885f1aab37c592bb0c.png",
+    "static/media/1.jpg": "/static/media/1.54a162199fcf26a10666.jpg",
+    "static/media/4.jpg": "/static/media/4.0d85ef6cbadc792c8a1d.jpg",
+    "static/media/3.jpg": "/static/media/3.e49380632af5dbb4315f.jpg",
+    "static/media/GangwonEduPowerExtraBoldA.woff": "/static/media/GangwonEduPowerExtraBoldA.39110000e36f7c7ab83e.woff",
+    "static/media/5.jpg": "/static/media/5.e319b933d8ddfe548305.jpg",
+    "static/media/7.jpg": "/static/media/7.5139378c037773fa13b7.jpg",
+    "static/media/6.jpg": "/static/media/6.4abc03478d3da8d1c017.jpg",
+    "static/media/event.png": "/static/media/event.fdbb71f59720a754742d.png",
+    "static/media/logo.png": "/static/media/logo.12e17d2e56a2163a0b0c.png",
+    "index.html": "/index.html",
+    "main.ed6c6edd.css.map": "/static/css/main.ed6c6edd.css.map",
+    "main.aa7f0c37.js.map": "/static/js/main.aa7f0c37.js.map",
+    "787.aafd603c.chunk.js.map": "/static/js/787.aafd603c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ed6c6edd.css",
+    "static/js/main.aa7f0c37.js"
+  ]
+}
