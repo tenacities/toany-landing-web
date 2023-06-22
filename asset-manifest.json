@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/static/css/main.567e9603.css",
-    "main.js": "/static/js/main.da94d5a4.js",
+    "main.js": "/static/js/main.0d894dc1.js",
     "static/js/787.aafd603c.chunk.js": "/static/js/787.aafd603c.chunk.js",
     "static/media/GangwonEduPowerExtraBoldA.woff": "/static/media/GangwonEduPowerExtraBoldA.39110000e36f7c7ab83e.woff",
     "static/media/ci.png": "/static/media/ci.b99758f2d50d2a4fed8a.png",
     "static/media/logo.png": "/static/media/logo.12e17d2e56a2163a0b0c.png",
     "index.html": "/index.html",
     "main.567e9603.css.map": "/static/css/main.567e9603.css.map",
-    "main.da94d5a4.js.map": "/static/js/main.da94d5a4.js.map",
+    "main.0d894dc1.js.map": "/static/js/main.0d894dc1.js.map",
     "787.aafd603c.chunk.js.map": "/static/js/787.aafd603c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.567e9603.css",
-    "static/js/main.da94d5a4.js"
+    "static/js/main.0d894dc1.js"
   ]
 }
