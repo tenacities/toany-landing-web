@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect, useRef, useState} from "react";
+import {Link} from "react-router-dom";
 import Ci from "./images/ci.png";
 import songData from "./data/songData";
 
@@ -11,8 +11,16 @@ function App() {
   const [footerPanel, setFooterPanel] = useState(0); // 0: noting open, 1: korean info open, 2: eng info open
   const [filterValue, setFilterValue] = useState<string>();
 
-  const onFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFilterValue(e.target.value.toLowerCase());
+  const searchRef = useRef<HTMLInputElement>(null);
+  const onFilterChange = () => {
+    const searchValue = searchRef.current?.value.toLowerCase();
+    setTimeout(() => {
+      if (searchValue === searchRef.current?.value.toLowerCase()) {
+        setFilterValue(searchValue);
+      } else {
+        console.log("ewq");
+      }
+    }, 300);
   };
 
   const [filteredSongData, setFilteredSongData] = useState(songData);
@@ -47,6 +55,7 @@ function App() {
       </div>
       <div className={`w-full px-4 my-4`}>
         <input
+          ref={searchRef}
           className={`w-full px-4 font-GangwonEduPowerExtraBoldA h-10 border-b-blue-500 bg-[#35E2B1] focus:bg-[#35CAA0] rounded-full outline-none placeholder-[#33b98f]`}
           type="text"
           placeholder={`곡 또는 가수 이름을 입력해 주세요.`}
