@@ -51,7 +51,7 @@ function App() {
       >
         [듀엣 태보]의 영문 곡 검색 기능입니다
       </div>
-      <div className={`w-full px-4 my-4`}>
+      <div className={`w-full p-4 sticky top-0 bg-white`}>
         <input
           ref={searchRef}
           className={`w-full px-4 font-GangwonEduPowerExtraBoldA h-10 border-b-blue-500 bg-[#35E2B1] focus:bg-[#35CAA0] rounded-full outline-none placeholder-[#33b98f]`}
