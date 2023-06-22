@@ -163,5 +163,5 @@ iframe.youtube-video {
 }
 
 *::-webkit-scrollbar {
-    display: none;
+    /*display: none;*/
 }
