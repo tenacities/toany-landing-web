@@ -22,10 +22,10 @@ function App() {
         ? songData
         : songData.filter(
             (it) =>
-              it.singerKor.includes(filterValue) ||
-              it.singerEng.includes(filterValue) ||
-              it.songKor.includes(filterValue) ||
-              it.songEng.includes(filterValue)
+              it.singerKor.toLowerCase().includes(filterValue) ||
+              it.singerEng.toLowerCase().includes(filterValue) ||
+              it.songKor.toLowerCase().includes(filterValue) ||
+              it.songEng.toLowerCase().includes(filterValue)
           )
     );
   }, [filterValue]);
