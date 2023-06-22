@@ -17,8 +17,6 @@ function App() {
     setTimeout(() => {
       if (searchValue === searchRef.current?.value.toLowerCase()) {
         setFilterValue(searchValue);
-      } else {
-        console.log("ewq");
       }
     }, 300);
   };
